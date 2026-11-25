@@ -116,7 +116,8 @@ function seedState() {
     discounts: {},   // tableId -> discount %
     bills: [],       // { id, tableName, lines, subtotal, discountPct, discount, tax, total, itemCount, closedAt }
     bookings: [],    // { id, ref, name, phone, guests, date, time, area, notes, status, tableId }
-    kitchen: {}      // tableId -> { status: new|preparing|ready|served, placedAt, byName }
+    kitchen: {},     // tableId -> { status: new|preparing|ready|served, placedAt, byName }
+    onlineOrders: [] // { id, ref, name, phone, type, tableId, lines, notes, status, placedAt, kitchenKey }
   };
 }
 
@@ -131,6 +132,7 @@ function loadState() {
         if (!Array.isArray(s.bills)) s.bills = [];
         if (!Array.isArray(s.bookings)) s.bookings = [];
         if (!s.kitchen) s.kitchen = {};
+        if (!Array.isArray(s.onlineOrders)) s.onlineOrders = [];
         return s;
       }
     }
@@ -183,6 +185,29 @@ function clearTicket(state, tableId) {
   if (state.kitchen) delete state.kitchen[tableId];
 }
 
+/* ---- Guest online orders ----
+   A guest builds a cart on the menu page and places an order. Staff
+   accept it from the waiter floor: dine-in orders merge into the
+   table's running order; takeaway orders get their own kitchen
+   ticket under the key 'tk-<orderId>'. */
+function newOrderRef(existing) {
+  var ref;
+  do { ref = 'ORD-' + Math.floor(1000 + Math.random() * 9000); }
+  while (existing.some(function (o) { return o.ref === ref; }));
+  return ref;
+}
+
+function priceOrderLines(state, lines) {
+  return (lines || []).map(function (l) {
+    var item = menuItem(state, l.itemId);
+    return { name: item ? item.name : '(removed dish)', price: item ? item.price : 0, qty: l.qty };
+  });
+}
+
+function onlineOrderTotal(state, order) {
+  return computeBill(priceOrderLines(state, order.lines), 0).total;
+}
+
 function orderTotal(state, tableId) {
   return computeBill(pricedLines(state, tableId), state.discounts[tableId] || 0).total;
 }
@@ -196,6 +221,8 @@ if (typeof module !== 'undefined' && module.exports) {
     formatRs: formatRs, todayStr: todayStr, newBookingRef: newBookingRef,
     seedState: seedState, pricedLines: pricedLines, orderTotal: orderTotal,
     tableStatus: tableStatus, ticketFor: ticketFor, openTicket: openTicket,
-    setTicketStatus: setTicketStatus, clearTicket: clearTicket
+    setTicketStatus: setTicketStatus, clearTicket: clearTicket,
+    newOrderRef: newOrderRef, priceOrderLines: priceOrderLines,
+    onlineOrderTotal: onlineOrderTotal
   };
 }

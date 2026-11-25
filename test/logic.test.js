@@ -1,7 +1,8 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs,
-  seedState, ticketFor, openTicket, setTicketStatus, clearTicket } = require('../js/store.js');
+  seedState, ticketFor, openTicket, setTicketStatus, clearTicket,
+  newOrderRef, onlineOrderTotal, priceOrderLines } = require('../js/store.js');
 
 test('lineTotal multiplies price by quantity', () => {
   assert.equal(lineTotal({ price: 350, qty: 3 }), 1050);
@@ -104,4 +105,23 @@ test('clearTicket removes the ticket (bill closed / order cleared)', () => {
   clearTicket(s, 't3');
   assert.equal(ticketFor(s, 't3'), null);
   clearTicket(s, 't3'); // clearing twice is a no-op, not an error
+});
+
+test('online order refs are ORD-#### and unique against existing orders', () => {
+  const existing = [{ ref: 'ORD-1234' }];
+  for (let i = 0; i < 40; i++) {
+    const ref = newOrderRef(existing);
+    assert.match(ref, /^ORD-\d{4}$/);
+    assert.notEqual(ref, 'ORD-1234');
+    existing.push({ ref });
+  }
+});
+
+test('online order total prices lines from the live menu plus 5% tax', () => {
+  const s = seedState();
+  const biryani = s.menu.find((m) => m.name === 'Chicken Biryani (Single)');
+  const order = { lines: [{ itemId: biryani.id, qty: 2 }] };
+  // 2 x 350 = 700 subtotal, tax = 35, total 735
+  assert.equal(onlineOrderTotal(s, order), 735);
+  assert.equal(priceOrderLines(s, order.lines)[0].name, 'Chicken Biryani (Single)');
 });

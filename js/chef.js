@@ -32,6 +32,17 @@ function ticketsByStatus() {
     groups[ticket.status === 'preparing' ? 'preparing' : ticket.status === 'ready' ? 'ready' : 'new']
       .push({ table: t, ticket: ticket });
   });
+  /* Takeaway online orders cook on the same pass, under tk-<orderId> keys */
+  Object.keys(state.kitchen || {}).forEach(function (key) {
+    if (key.indexOf('tk-') !== 0) return;
+    if (!orderLines(state, key).length) return;
+    var ticket = ticketFor(state, key);
+    if (!ticket || ticket.status === 'served') return;
+    var order = state.onlineOrders.find(function (o) { return o.kitchenKey === key; });
+    var pseudo = { id: key, name: 'Takeaway \u00b7 ' + (order ? order.ref : 'Online') };
+    groups[ticket.status === 'preparing' ? 'preparing' : ticket.status === 'ready' ? 'ready' : 'new']
+      .push({ table: pseudo, ticket: ticket });
+  });
   Object.keys(groups).forEach(function (k) {
     groups[k].sort(function (a, b) {
       return new Date(a.ticket.placedAt || 0) - new Date(b.ticket.placedAt || 0);
@@ -96,7 +107,8 @@ document.getElementById('kds-board').addEventListener('click', function (e) {
   saveState(state);
   render();
   var t = tableById(state, tableId);
-  toast(t.name + (btn.dataset.act === 'ready' ? ' is READY to serve' : ' — now preparing'));
+  var label = t ? t.name : 'Takeaway order';
+  toast(label + (btn.dataset.act === 'ready' ? ' is READY to serve' : ' \u2014 now preparing'));
 });
 
 /* Live clock */

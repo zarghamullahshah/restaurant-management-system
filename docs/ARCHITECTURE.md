@@ -82,6 +82,27 @@ Pages re-render on the `storage` event, so with the system open in two
 tabs (or two devices sharing a browser profile), an order taken in one
 appears in the other without a refresh.
 
+## Guest online orders
+
+The menu page is a full ordering channel, not a price list. A guest's
+order (`onlineOrders[]`, reference `ORD-####`) is placed with status
+`placed` and surfaces in the waiter floor's online inbox:
+
+- **Accept (dine-in):** its lines merge into the table's running order
+  and the table's kitchen ticket opens — the bill closes at the table
+  as usual.
+- **Accept (takeaway):** its lines are copied into `orders` under the
+  key `tk-<orderId>` and a ticket opens under the same key, so the
+  chef's board renders it as a `Takeaway · ORD-####` card with no
+  special casing beyond the key prefix.
+- **Complete (takeaway):** once the ticket is ready/served, the waiter
+  hands it over and the sale is pushed into `bills[]` (table name
+  `Takeaway · ORD-####`), so online revenue appears in sales history.
+- **Reject:** status `cancelled`; the guest sees it in tracking.
+
+Guests track by phone number on the menu page; the status chip derives
+from the order status plus its linked kitchen ticket.
+
 ## Landing page motion (`js/landing.js`)
 
 One `requestAnimationFrame` loop drives the hero tilt, photo parallax,

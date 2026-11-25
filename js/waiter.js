@@ -114,7 +114,50 @@ function renderOrder() {
       '<button class="btn btn-danger" id="clear-order">Clear order</button></div>' : '');
 }
 
-function renderAll() { renderTables(); renderReadyAlert(); renderOrder(); }
+function renderOnline() {
+  var card = document.getElementById('online-card');
+  var list = document.getElementById('online-list');
+  var active = state.onlineOrders.filter(function (o) {
+    return o.status === 'placed' || o.status === 'accepted';
+  }).slice().reverse();
+  var placedCount = state.onlineOrders.filter(function (o) { return o.status === 'placed'; }).length;
+  card.hidden = active.length === 0;
+  document.getElementById('online-badge').textContent = placedCount ? placedCount + ' new' : '';
+  list.innerHTML = active.map(function (o) {
+    var items = priceOrderLines(state, o.lines).map(function (l) {
+      return l.name + ' \u00d7 ' + l.qty;
+    }).join(' \u00b7 ');
+    var where = o.type === 'dine-in'
+      ? 'Dine-in \u00b7 ' + ((tableById(state, o.tableId) || {}).name || 'Table')
+      : 'Takeaway';
+    var head = '<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline">' +
+      '<strong>' + o.ref + '</strong><span style="color:var(--ink-soft);font-size:13px">' + where +
+      ' \u00b7 ' + o.name + ' \u00b7 ' + new Date(o.placedAt).toLocaleTimeString('en-PK', { hour: 'numeric', minute: '2-digit' }) + '</span></div>' +
+      '<p style="margin:6px 0 4px;font-size:14px">' + items + '</p>' +
+      (o.notes ? '<p style="margin:0 0 4px;font-size:13px;color:var(--ink-soft)">Note: ' + o.notes + '</p>' : '') +
+      '<p style="margin:0 0 10px;font-weight:700;font-size:14px">' + formatRs(onlineOrderTotal(state, o)) + '</p>';
+    var actions = '';
+    if (o.status === 'placed') {
+      actions = canServe
+        ? '<button class="btn btn-primary btn-sm" data-accept="' + o.id + '">Accept &amp; send to kitchen</button> ' +
+          '<button class="btn btn-danger btn-sm" data-reject="' + o.id + '">Reject</button>'
+        : '<span style="font-size:13px;color:var(--ink-soft)">Waiting for a waiter to accept.</span>';
+    } else {
+      var tk = o.kitchenKey ? ticketFor(state, o.kitchenKey) : null;
+      var st = tk ? tk.status : 'new';
+      actions = '<span style="font-size:13.5px;color:var(--ink-soft)">In the kitchen \u00b7 ' + st + '</span>';
+      if (o.type === 'takeaway' && canServe && (st === 'ready' || st === 'served')) {
+        actions += ' <button class="btn btn-green btn-sm" data-complete="' + o.id + '">Handed over \u00b7 record sale</button>';
+      }
+      if (o.type === 'dine-in') {
+        actions += ' <span style="font-size:13.5px;color:var(--ink-soft)">(merged into the table\u2019s order \u00b7 bill closes at the table)</span>';
+      }
+    }
+    return '<div style="border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:11px">' + head + actions + '</div>';
+  }).join('');
+}
+
+function renderAll() { renderTables(); renderReadyAlert(); renderOrder(); renderOnline(); }
 
 function touchTicket() {
   if (orderLines(state, selectedTableId).length) {
@@ -197,6 +240,61 @@ document.getElementById('order-panel').addEventListener('change', function (e) {
   if (e.target.id === 'discount' && selectedTableId && canServe) {
     state.discounts[selectedTableId] = Math.min(100, Math.max(0, Number(e.target.value) || 0));
     saveState(state); renderAll();
+  }
+});
+
+document.getElementById('online-list').addEventListener('click', function (e) {
+  if (!canServe) return;
+  var acc = e.target.closest('[data-accept]');
+  var rej = e.target.closest('[data-reject]');
+  var comp = e.target.closest('[data-complete]');
+  var btn = acc || rej || comp;
+  if (!btn) return;
+  var id = btn.dataset.accept || btn.dataset.reject || btn.dataset.complete;
+  var order = state.onlineOrders.find(function (o) { return o.id === id; });
+  if (!order) return;
+  if (rej) {
+    order.status = 'cancelled';
+    saveState(state); renderAll();
+    toast(order.ref + ' rejected');
+    return;
+  }
+  if (acc) {
+    if (order.type === 'dine-in' && order.tableId) {
+      var merged = orderLines(state, order.tableId).slice();
+      order.lines.forEach(function (l) {
+        var ex = merged.find(function (m) { return m.itemId === l.itemId; });
+        if (ex) ex.qty += l.qty; else merged.push({ itemId: l.itemId, qty: l.qty });
+      });
+      state.orders[order.tableId] = merged;
+      order.kitchenKey = order.tableId;
+      openTicket(state, order.tableId, order.name + ' (online)');
+    } else {
+      var key = 'tk-' + order.id;
+      state.orders[key] = order.lines.slice();
+      order.kitchenKey = key;
+      openTicket(state, key, order.name + ' (takeaway)');
+    }
+    order.status = 'accepted';
+    saveState(state); renderAll();
+    toast(order.ref + ' accepted \u2014 sent to the kitchen');
+    return;
+  }
+  if (comp) {
+    var key2 = order.kitchenKey;
+    var lines = pricedLines(state, key2);
+    var bill = computeBill(lines, 0);
+    state.bills.push({
+      id: state.bills.length + 1, tableName: 'Takeaway \u00b7 ' + order.ref,
+      lines: lines, subtotal: bill.subtotal, discountPct: 0,
+      discount: 0, tax: bill.tax, total: bill.total,
+      itemCount: bill.itemCount, closedAt: new Date().toISOString()
+    });
+    delete state.orders[key2];
+    clearTicket(state, key2);
+    order.status = 'completed';
+    saveState(state); renderAll();
+    toast(order.ref + ' completed \u2014 ' + formatRs(bill.total) + ' recorded');
   }
 });
 

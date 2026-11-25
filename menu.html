@@ -15,7 +15,7 @@
   <nav class="topnav">
     <a href="index.html">Home</a>
     <a href="menu.html" class="is-here">Menu</a>
-    <a href="manager.html">Manager</a>
+    <a href="login.html">Staff login</a>
     <a class="btn btn-primary" href="booking.html">Book a table</a>
   </nav>
 </header>
@@ -34,7 +34,67 @@
   <div class="chips" id="chips"></div>
   <div class="dish-grid" id="dish-grid"></div>
   <p class="empty-note" id="empty" hidden>Nothing available in this section right now — the kitchen updates it through the day.</p>
+
+  <!-- ================= ORDER PANEL ================= -->
+  <section class="panel order-panel" id="order-panel" hidden>
+    <h2>Your order</h2>
+    <p class="sub">Review your dishes, tell us where they're going, and send the order straight to our kitchen. Pay at the counter or at your table.</p>
+    <div id="cart-lines"></div>
+    <div class="cart-totals" id="cart-totals"></div>
+
+    <div class="field">
+      <label>Order type</label>
+      <div class="type-toggle" id="type-toggle">
+        <button type="button" class="chip is-on" data-type="dine-in">Dine-in at a table</button>
+        <button type="button" class="chip" data-type="takeaway">Takeaway</button>
+      </div>
+    </div>
+    <div class="field" id="table-field">
+      <label for="ord-table">Your table</label>
+      <select id="ord-table"></select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="ord-name">Your name</label>
+        <input id="ord-name" type="text" placeholder="e.g. Ahmed Raza" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="ord-phone">Phone</label>
+        <input id="ord-phone" type="tel" placeholder="03xx xxxxxxx" autocomplete="tel">
+      </div>
+    </div>
+    <div class="field">
+      <label for="ord-notes">Notes for the kitchen <span style="color:var(--ink-soft);font-weight:400">(optional)</span></label>
+      <input id="ord-notes" type="text" placeholder="Less spicy, extra raita…">
+    </div>
+    <p class="form-error" id="ord-error" hidden></p>
+    <button class="btn btn-primary btn-lg" id="place-order" style="width:100%;justify-content:center">Send order to the kitchen</button>
+  </section>
+
+  <section class="panel order-panel" id="order-success" hidden>
+    <h2>Order sent — thank you!</h2>
+    <p class="sub" id="success-text"></p>
+    <p class="sub">Keep your reference handy. You can follow the order below with your phone number — it moves from <strong>Placed</strong> to <strong>In the kitchen</strong> to <strong>Ready</strong>.</p>
+  </section>
+
+  <!-- ================= TRACK ORDER ================= -->
+  <section class="panel order-panel" id="track-panel">
+    <h2>Track your order</h2>
+    <p class="sub">Ordered already? Enter the phone number you ordered with.</p>
+    <div class="track-row">
+      <input id="track-phone" type="tel" placeholder="03xx xxxxxxx">
+      <button class="btn btn-primary" id="track-btn">Track</button>
+    </div>
+    <div id="track-results"></div>
+  </section>
 </main>
+
+<!-- Sticky cart bar -->
+<button class="cart-bar" id="cart-bar" hidden>
+  <span id="cart-bar-text">0 dishes</span>
+  <span class="cart-bar-total" id="cart-bar-total">Rs 0</span>
+  <span class="cart-bar-cta">Review &amp; order →</span>
+</button>
 
 <footer class="footer">
   <span>The Copper Kitchen — good food, honest bills.</span>

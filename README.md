@@ -61,7 +61,9 @@ together.
   masked-word headlines), 3D-tilting product stage, full-width kitchen
   film, scroll-driven horizontal photography gallery, animated counters.
 - **Guest system** — a live menu (sold-out dishes vanish, price edits
-  appear instantly) and reservations with a `CK-####` reference that
+  appear instantly), **online ordering** (cart → dine-in or takeaway →
+  straight into the staff system, tracked by phone: placed → in the
+  kitchen → ready), and reservations with a `CK-####` reference that
   guests track by phone: waiting → confirmed → seated.
 - **Manager system** — revenue dashboard, tables & orders with the full
   billing breakdown, a bookings inbox (confirm / seat / cancel — the
@@ -89,7 +91,7 @@ python3 -m http.server 8000
 node --test test/logic.test.js
 ```
 
-13 tests cover the pure logic in `js/store.js`: billing maths, discount
+15 tests cover the pure logic in `js/store.js`: billing maths, discount
 clamping, day filtering, popularity aggregation and the kitchen ticket
 lifecycle.
 
