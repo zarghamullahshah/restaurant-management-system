@@ -2,7 +2,7 @@
 
 A complete, working restaurant management system that runs entirely in the browser: tables, live orders, menu management, billing with tax and discounts, and a sales history with CSV export. Built for a real single-outlet restaurant — no sign-up, no server, no dependencies.
 
-**Live demo:** _added once GitHub Pages is enabled for this repo._
+**Live demo:** https://zarghamullahshah.github.io/restaurant-management-system/
 
 ## What it does
 
