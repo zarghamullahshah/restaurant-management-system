@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <title>The Copper Kitchen — Restaurant Management System</title>
 <meta name="description" content="Tables, live orders, menu management and billing in one screen. The Copper Kitchen restaurant management system — free, in your browser, no sign-up.">
 <link rel="stylesheet" href="landing.css">
@@ -13,16 +14,17 @@
 
 <header class="nav" id="nav">
   <a class="brand" href="#top">
-    <span class="brand-mark">CK</span>
+    <span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span>
     <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
   </a>
   <nav class="nav-links">
+    <a href="menu.html">Menu</a>
     <a href="#features">Features</a>
     <a href="#showcase">Inside the system</a>
     <a href="#how">How it works</a>
     <a href="#reviews">Reviews</a>
   </nav>
-  <a class="btn btn-primary" href="app.html">Open the system</a>
+  <a class="btn btn-primary" href="booking.html">Book a table</a>
 </header>
 
 <main id="top">
@@ -39,7 +41,7 @@
         <h1 class="reveal">Run the whole floor<br>from <em>one screen.</em></h1>
         <p class="hero-sub reveal">Tables, live orders, the full menu and the bill — handled in a single place your whole team already knows how to use. No installs, no sign-up, no monthly fee.</p>
         <div class="hero-ctas reveal">
-          <a class="btn btn-primary btn-lg" href="app.html">Launch the system
+          <a class="btn btn-primary btn-lg" href="booking.html">Book a table
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
           <a class="btn btn-outline btn-lg" href="#showcase">See it inside</a>
@@ -89,6 +91,18 @@
     <a class="scroll-cue" href="#features" aria-label="Scroll down"><span></span></a>
   </section>
 
+  <!-- ================= FILM BAND ================= -->
+  <section class="film-band reveal" aria-label="Inside a service at The Copper Kitchen">
+    <video class="film" autoplay muted loop playsinline preload="metadata" poster="assets/hero-interior.jpg" id="film">
+      <source src="assets/kitchen.mp4" type="video/mp4">
+    </video>
+    <div class="film-overlay">
+      <p class="film-quote">"The pass is calm when the system isn't."</p>
+      <p class="film-caption">A real service, mid-rush — filmed in a working kitchen. Every order on that pass started as a tap on a table.</p>
+      <button class="film-toggle" id="film-toggle" aria-label="Pause the film">Pause</button>
+    </div>
+  </section>
+
   <!-- ================= MARQUEE ================= -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
@@ -99,7 +113,7 @@
 
   <!-- ================= STATS ================= -->
   <section class="stats-band">
-    <div class="stat reveal"><strong><span class="count" data-count="18">0</span></strong><span>dishes pre-loaded, ready to sell</span></div>
+    <div class="stat reveal"><strong><span class="count" data-count="19">0</span></strong><span>dishes pre-loaded, ready to sell</span></div>
     <div class="stat reveal"><strong><span class="count" data-count="8">0</span></strong><span>tables tracked live, incl. family halls</span></div>
     <div class="stat reveal"><strong><span class="count" data-count="5">0</span>%</strong><span>tax handled on every bill, automatically</span></div>
     <div class="stat reveal"><strong>Rs <span class="count" data-count="0">0</span></strong><span>cost — free, no card, no trial clock</span></div>
@@ -143,17 +157,36 @@
     </div>
   </section>
 
+  <!-- ================= EXPERIENCE ================= -->
+  <section class="section experience" id="experience">
+    <div class="exp-media">
+      <figure class="exp-main reveal"><img src="assets/chef.jpg" alt="A chef's hands chopping fresh green chillies on a board" data-parallax="0.06" loading="lazy"></figure>
+      <figure class="exp-card reveal"><img src="assets/interior-dark.jpg" alt="The dining room at The Copper Kitchen in the evening" data-parallax="-0.05" loading="lazy"></figure>
+    </div>
+    <div class="exp-copy">
+      <p class="eyebrow reveal">The room, the craft</p>
+      <h2 class="reveal">Built by people who have worked a pass.</h2>
+      <p class="reveal">Software for restaurants is usually written by people who have never survived a Friday night. This one is shaped around how a floor actually moves — the glance at the table board, the bill that must be right the first time, the menu that changes with the market.</p>
+      <p class="reveal">Open the kitchen, keep the dining room calm, and let the numbers look after themselves.</p>
+      <div class="gallery reveal">
+        <figure><img src="assets/hero-interior.jpg" alt="Open kitchen and dining room" loading="lazy"><figcaption>The open kitchen</figcaption></figure>
+        <figure><img src="assets/gallery-rice.jpg" alt="A bowl of chicken dum biryani" loading="lazy"><figcaption>Dum biryani, daily</figcaption></figure>
+        <figure><img src="assets/dish-grill.jpg" alt="Charcoal grill platter with kebabs" loading="lazy"><figcaption>From the charcoal grill</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= SHOWCASE ================= -->
   <section class="section section-dark" id="showcase">
     <p class="eyebrow reveal">Inside the system</p>
     <h2 class="reveal">A real menu, real prices,<br>real orders — from minute one.</h2>
     <div class="showcase">
-      <article class="dish reveal"><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
-      <article class="dish reveal"><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
-      <article class="dish reveal"><span class="dish-cat">Mains</span><h3>Mutton Pulao</h3><p>Slow-cooked yakhni rice with tender mutton and whole spices.</p><strong>Rs 780</strong></article>
-      <article class="dish reveal"><span class="dish-cat">Desserts</span><h3>Kulfa Falooda</h3><p>Dense kulfa over rose falooda with basil seeds and crushed pistachio.</p><strong>Rs 420</strong></article>
+      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-karahi.jpg" alt="Chicken karahi served with naan" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
+      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-grill.jpg" alt="Seekh kebabs and mixed grill on a platter" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
+      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-biryani.jpg" alt="Chicken biryani with raita" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Biryani (Single)</h3><p>Layered dum biryani with raita and salad — the lunch rush in a plate.</p><strong>Rs 350</strong></article>
+      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-samosa.jpg" alt="Crispy samosas with chutneys" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Crispy Samosa (2 pcs)</h3><p>Flaky, spiced potato filling, tamarind and mint chutneys on the side.</p><strong>Rs 150</strong></article>
     </div>
-    <p class="showcase-note reveal">These are four of the 18 dishes pre-loaded in the system. Yours can be edited in seconds — <a href="app.html">try it live</a>.</p>
+    <p class="showcase-note reveal">These are four of the 19 dishes pre-loaded in the system. Yours can be edited in seconds — <a href="menu.html">see the full menu</a>.</p>
   </section>
 
   <!-- ================= HOW IT WORKS ================= -->
@@ -194,7 +227,7 @@
     <div class="cta-inner reveal">
       <h2>Your next service could run on this.</h2>
       <p>Open it, seat a table, close a bill. Two minutes, no sign-up — then decide.</p>
-      <a class="btn btn-primary btn-lg" href="app.html">Open the system — it's free</a>
+      <a class="btn btn-primary btn-lg" href="booking.html">Book your table — it takes a minute</a>
     </div>
   </section>
 
@@ -203,7 +236,7 @@
 <footer class="footer">
   <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
   <span class="footer-note">Built for real restaurants. Runs entirely in your browser — your data never leaves your device.</span>
-  <a href="app.html">Launch the system</a>
+  <a href="manager.html">Manager system</a>
 </footer>
 
 <script src="landing.js"></script>

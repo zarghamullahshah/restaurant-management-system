@@ -110,6 +110,41 @@ var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   });
 })();
 
+/* ---------- Scroll parallax on photography ---------- */
+(function parallax() {
+  if (reduced) return;
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+  if (!nodes.length) return;
+  var ticking = false;
+  function update() {
+    var vh = window.innerHeight;
+    nodes.forEach(function (n) {
+      var r = n.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var speed = Number(n.dataset.parallax) || 0.05;
+      var centre = (r.top + r.height / 2 - vh / 2) / vh; // -0.5 .. 0.5
+      n.style.transform = 'scale(1.12) translateY(' + (centre * speed * -220) + 'px)';
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+})();
+
+/* ---------- Film band controls ---------- */
+(function film() {
+  var video = document.getElementById('film');
+  var btn = document.getElementById('film-toggle');
+  if (!video) return;
+  if (reduced) { video.removeAttribute('autoplay'); video.pause(); if (btn) btn.textContent = 'Play'; }
+  if (btn) btn.addEventListener('click', function () {
+    if (video.paused) { video.play(); btn.textContent = 'Pause'; }
+    else { video.pause(); btn.textContent = 'Play'; }
+  });
+})();
+
 /* ---------- Sticky nav + scroll progress ---------- */
 (function navAndProgress() {
   var nav = document.getElementById('nav');

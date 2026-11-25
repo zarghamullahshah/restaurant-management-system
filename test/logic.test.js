@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs } = require('../app.js');
+const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs } = require('../store.js');
 
 test('lineTotal multiplies price by quantity', () => {
   assert.equal(lineTotal({ price: 350, qty: 3 }), 1050);
