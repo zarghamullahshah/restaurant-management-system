@@ -320,8 +320,16 @@ a { color: inherit; }
 }
 .review:hover { transform: translateY(-6px); box-shadow: 0 22px 44px rgba(34,28,21,0.12); }
 .review blockquote { margin: 0 0 20px; font-family: Georgia, serif; font-size: 16.5px; line-height: 1.65; }
-.review figcaption strong { display: block; font-size: 15px; }
-.review figcaption span { color: var(--ink-soft); font-size: 13px; }
+.review figcaption { display: flex; align-items: center; gap: 12px; }
+.review figcaption .review-ava {
+  width: 42px; height: 42px; border-radius: 50%; flex: none;
+  background: var(--copper); color: #fff; font-size: 13px; font-weight: 800;
+  display: grid; place-items: center;
+}
+.review figcaption .review-ava.ava-brown { background: #7a5a34; }
+.review figcaption .review-ava.ava-green { background: #4c5a43; }
+.review-who strong { display: block; font-size: 15px; }
+.review-who span { color: var(--ink-soft); font-size: 13px; }
 
 /* ---------- CTA / footer ---------- */
 .cta { padding: 104px 34px 110px; }
