@@ -7,6 +7,10 @@ versions are dated while the project is pre-1.0.
 ## [Unreleased]
 
 ### Added
+- A longer, more cinematic landing journey: a scroll-scrubbed manifesto
+  statement, three dish spotlights, an illustrated service timeline
+  whose line draws as you scroll, an FAQ accordion and a giant-type
+  finale.
 - Guest online ordering: cart and checkout on the menu page (dine-in or
   takeaway), a waiter-side online inbox, takeaway tickets on the kitchen
   display, sale recording on handover, and order tracking by phone.

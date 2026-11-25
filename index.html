@@ -24,9 +24,11 @@
 <nav class="rail" id="rail" aria-hidden="true">
   <a data-chapter="top" class="is-on"><span>Intro</span></a>
   <a data-chapter="film"><span>Film</span></a>
+  <a data-chapter="story"><span>Story</span></a>
   <a data-chapter="features"><span>Features</span></a>
   <a data-chapter="experience"><span>Craft</span></a>
   <a data-chapter="showcase"><span>Menu</span></a>
+  <a data-chapter="night"><span>The Night</span></a>
   <a data-chapter="reviews"><span>Reviews</span></a>
 </nav>
 
@@ -146,6 +148,14 @@
     </div>
   </section>
 
+  <!-- ================= MANIFESTO (scroll-scrubbed statement) ================= -->
+  <section class="manifesto" id="story">
+    <div class="manifesto-sticky">
+      <p class="eyebrow reveal">Why this exists</p>
+      <p class="manifesto-text" id="manifesto-text">A restaurant runs on a hundred small certainties. The table is free. The bill is right. The karahi left the pass at the right minute. We built The Copper Kitchen so those certainties stop living in one person's memory — and start living in a system the whole floor can see.</p>
+    </div>
+  </section>
+
   <!-- ================= MARQUEE ================= -->
   <div class="marquee" aria-hidden="true">
     <div class="marquee-track">
@@ -229,6 +239,39 @@
     </div>
   </section>
 
+  <!-- ================= DISH SPOTLIGHTS ================= -->
+  <section class="section spotlights" id="spotlights">
+    <p class="eyebrow reveal">From the pass</p>
+    <h2 class="reveal" data-split>Three dishes that carry the house.</h2>
+    <article class="spot reveal">
+      <figure class="spot-media"><img src="assets/dish-karahi.jpg" alt="Chicken karahi served with naan" data-parallax="0.05" loading="lazy"></figure>
+      <div class="spot-copy">
+        <span class="spot-no">01</span>
+        <h3>The Karahi</h3>
+        <p>Wok-tossed to order — tomato, green chilli, ginger, and a finish of desi ghee. It is the dish the kitchen is judged by, so it is the dish the system protects: the moment it is ordered, its ticket is on the pass, timed.</p>
+        <p class="spot-price">Chicken Karahi (Half) · Rs 1,450</p>
+      </div>
+    </article>
+    <article class="spot reveal spot-flip">
+      <figure class="spot-media"><img src="assets/dish-grill.jpg" alt="Seekh kebabs on the charcoal grill" data-parallax="-0.05" loading="lazy"></figure>
+      <div class="spot-copy">
+        <span class="spot-no">02</span>
+        <h3>The Grill</h3>
+        <p>Charcoal, not gas. Seekh kebabs hand-minced every morning, tikka marinated overnight. When the grill sells out — and it does — the dish vanishes from the guest menu the same second the manager marks it gone.</p>
+        <p class="spot-price">Seekh Kebab (4 pcs) · Rs 550</p>
+      </div>
+    </article>
+    <article class="spot reveal">
+      <figure class="spot-media"><img src="assets/gallery-rice.jpg" alt="A bowl of chicken dum biryani" data-parallax="0.05" loading="lazy"></figure>
+      <div class="spot-copy">
+        <span class="spot-no">03</span>
+        <h3>The Biryani</h3>
+        <p>Layered and sealed for dum at eleven, opened at noon — the lunch rush in a plate. Biryani is also the most-ordered dish on the dashboard most days, which is exactly the kind of thing an owner should know without guessing.</p>
+        <p class="spot-price">Chicken Biryani (Single) · Rs 350</p>
+      </div>
+    </article>
+  </section>
+
   <!-- ================= SHOWCASE ================= -->
   <section class="section section-dark" id="showcase">
     <p class="eyebrow reveal">Inside the system</p>
@@ -252,6 +295,33 @@
       <article class="step reveal" data-reveal="zoom"><span class="step-no">2</span><h3>Build the order</h3><p>Add dishes, adjust quantities, apply a discount if the moment calls for it. The bill builds itself as you go.</p></article>
       <span class="step-line" aria-hidden="true"></span>
       <article class="step reveal" data-reveal="zoom"><span class="step-no">3</span><h3>Close &amp; it's recorded</h3><p>One click closes the bill, frees the table and files it in today's sales — dashboard updated instantly.</p></article>
+    </div>
+  </section>
+
+  <!-- ================= A NIGHT AT THE COPPER KITCHEN ================= -->
+  <section class="section night" id="night">
+    <p class="eyebrow reveal">One service, start to finish</p>
+    <h2 class="reveal" data-split>A night at The Copper Kitchen.</h2>
+    <div class="timeline" id="timeline">
+      <span class="tl-line"><span class="tl-fill" id="tl-fill"></span></span>
+      <article class="tl-item reveal"><span class="tl-dot"></span><time>12:00</time><div><h3>Doors open</h3><p>The day starts on the dashboard: yesterday's sales, today's bookings, the tables as they were left. Nothing to reconcile on paper.</p></div></article>
+      <article class="tl-item reveal"><span class="tl-dot"></span><time>13:30</time><div><h3>The lunch rush</h3><p>Biryani tickets stack up on the kitchen display in the order they were placed. Waiters stop shouting orders across the room — the pass already knows.</p></div></article>
+      <article class="tl-item reveal"><span class="tl-dot"></span><time>17:00</time><div><h3>Tea hour</h3><p>Samosas and lime soda, small bills, fast tables. A guest orders from the website menu; the waiter accepts it between two tables.</p></div></article>
+      <article class="tl-item reveal"><span class="tl-dot"></span><time>19:30</time><div><h3>Dinner service</h3><p>Family halls full, karahis on every second table. The grill sells out at nine — it disappears from the guest menu the same second, no awkward apologies.</p></div></article>
+      <article class="tl-item reveal"><span class="tl-dot"></span><time>23:00</time><div><h3>The last bill</h3><p>The final table closes. Revenue, bills and best-sellers are already counted — the owner checks the day from the dashboard, not from a shoebox of slips.</p></div></article>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section faq" id="faq">
+    <p class="eyebrow reveal">Questions</p>
+    <h2 class="reveal" data-split>Asked by owners, answered straight.</h2>
+    <div class="faq-list">
+      <div class="faq-item reveal"><button class="faq-q" aria-expanded="false">Is it really free?<span class="faq-x"></span></button><div class="faq-a"><p>Yes. The whole system — guest menu, online ordering, bookings, kitchen display, waiter floor and manager system — runs in the browser with no subscription, no per-order cut and no trial clock.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" aria-expanded="false">Does it work without internet?<span class="faq-x"></span></button><div class="faq-a"><p>Once the pages have loaded, everything runs and saves on the device itself. Load-shedding or dead Wi-Fi does not stop a service.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" aria-expanded="false">Where does my data live?<span class="faq-x"></span></button><div class="faq-a"><p>On your own device, in the browser's local storage — menus, orders, bills and bookings never leave the machine. Open the system in two tabs of the same browser and they stay in sync live.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" aria-expanded="false">Can my staff actually learn it?<span class="faq-x"></span></button><div class="faq-a"><p>Each role gets one simple workspace: waiters take orders, the chef moves tickets, the manager sees everything. Most teams are running it unaided within one shift.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q" aria-expanded="false">Can I use my own menu and prices?<span class="faq-x"></span></button><div class="faq-a"><p>Yes — the menu editor changes dishes, prices and availability, and every change is live on the guest menu and in ordering instantly. The 19 dishes it ships with are a starting point, not a limit.</p></div></div>
     </div>
   </section>
 
@@ -282,6 +352,12 @@
       <p>Open it, seat a table, close a bill. Two minutes, no sign-up — then decide.</p>
       <a class="btn btn-primary btn-lg" href="booking.html">Book your table — it takes a minute</a>
     </div>
+  </section>
+
+  <!-- ================= FINALE ================= -->
+  <section class="finale" aria-hidden="true">
+    <p class="finale-word">COPPER</p>
+    <p class="finale-word finale-outline">KITCHEN</p>
   </section>
 
 </main>

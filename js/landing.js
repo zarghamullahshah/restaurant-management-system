@@ -247,9 +247,11 @@ document.querySelectorAll('#rail a').forEach(function (a) {
   var map = [
     ['top', document.querySelector('.hero')],
     ['film', document.getElementById('film')],
+    ['story', document.getElementById('story')],
     ['features', document.getElementById('features')],
     ['experience', document.getElementById('experience')],
     ['showcase', document.getElementById('showcase')],
+    ['night', document.getElementById('night')],
     ['reviews', document.getElementById('reviews')]
   ].filter(function (p) { return p[1]; });
   var io = new IntersectionObserver(function (entries) {
@@ -267,6 +269,30 @@ document.querySelectorAll('#rail a').forEach(function (a) {
   }, { rootMargin: '-42% 0px -50% 0px' });
   map.forEach(function (p) { io.observe(p[1]); });
 })();
+
+
+/* ================= Manifesto — scroll-scrubbed word fill ============== */
+var manifestoWords = [];
+(function manifesto() {
+  var el = document.getElementById('manifesto-text');
+  if (!el) return;
+  var words = el.textContent.trim().split(/\s+/);
+  el.innerHTML = words.map(function (w) {
+    return '<span class="mw">' + w + '</span>';
+  }).join(' ');
+  manifestoWords = Array.prototype.slice.call(el.querySelectorAll('.mw'));
+  if (reduced) manifestoWords.forEach(function (w) { w.classList.add('lit'); });
+})();
+
+/* ================= FAQ accordion ====================================== */
+document.querySelectorAll('.faq-item').forEach(function (item) {
+  var btn = item.querySelector('.faq-q');
+  if (!btn) return;
+  btn.addEventListener('click', function () {
+    var open = item.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+});
 
 /* ================= The engine: one loop, everything lerped ============ */
 (function engine() {
@@ -356,6 +382,24 @@ document.querySelectorAll('#rail a').forEach(function (a) {
         n._pxTarget = centre * speed * -220;
         if (n._pxCur === undefined) n._pxCur = n._pxTarget;
       });
+      /* Manifesto scrub: words light up with scroll progress */
+      var mEl = document.getElementById('story');
+      if (mEl && manifestoWords.length) {
+        var mr = mEl.getBoundingClientRect();
+        var mp = Math.max(0, Math.min(1, -mr.top / (mEl.offsetHeight - vh)));
+        var lit = Math.round(mp * manifestoWords.length);
+        manifestoWords.forEach(function (w, i) {
+          w.classList.toggle('lit', i < lit);
+        });
+      }
+      /* Timeline draw */
+      var tl = document.getElementById('timeline');
+      var fill = document.getElementById('tl-fill');
+      if (tl && fill) {
+        var tr = tl.getBoundingClientRect();
+        var tp = Math.max(0, Math.min(1, (vh * 0.72 - tr.top) / tr.height));
+        fill.style.transform = 'scaleY(' + tp.toFixed(4) + ')';
+      }
       /* Horizontal gallery progress */
       if (hgalOn) {
         var r2 = hgal.getBoundingClientRect();
