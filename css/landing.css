@@ -752,3 +752,7 @@ html { scrollbar-width: thin; scrollbar-color: var(--copper) #171310; }
   .hero-mark, .hero-stage, .hero-pill, .hero-sub, .hero-ctas, .hero-trust, .hero-points { animation: none; }
   .hero-title em::after { animation: none; transform: scaleX(1); }
 }
+
+/* ---------- Continuous 3D scrub ---------- */
+[data-scrub] { transform-perspective: 1100px; }
+body.webgl .section { margin-top: 38px; margin-bottom: 38px; }

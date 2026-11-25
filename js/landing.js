@@ -294,6 +294,26 @@ document.querySelectorAll('.faq-item').forEach(function (item) {
   });
 });
 
+
+/* ============ Continuous scrub: ONE long animation for the whole page ==
+   Every tagged block is transformed continuously from its live viewport
+   position — a gentle 3D tilt (rotate on the x axis) and scale that
+   never stops while the page moves. Uses the CSS individual transform
+   properties (rotate / scale) so it composes with the reveal system
+   instead of fighting it. */
+var scrubEls = Array.prototype.slice.call(document.querySelectorAll('[data-scrub]'));
+function scrubAll(vh) {
+  for (var i = 0; i < scrubEls.length; i++) {
+    var el = scrubEls[i];
+    var r = el.getBoundingClientRect();
+    if (r.bottom < -80 || r.top > vh + 80) continue;
+    var c = (r.top + r.height / 2 - vh / 2) / vh; // -1 .. 1 through the viewport
+    if (c > 1) c = 1; if (c < -1) c = -1;
+    el.style.rotate = 'x ' + (-c * 4.5).toFixed(2) + 'deg';
+    el.style.scale = (1 - Math.abs(c) * 0.028).toFixed(4);
+  }
+}
+
 /* ================= The engine: one loop, everything lerped ============ */
 (function engine() {
   var stage = document.getElementById('hero-stage');
@@ -382,6 +402,7 @@ document.querySelectorAll('.faq-item').forEach(function (item) {
         n._pxTarget = centre * speed * -220;
         if (n._pxCur === undefined) n._pxCur = n._pxTarget;
       });
+      scrubAll(vh);
       /* Manifesto scrub: words light up with scroll progress */
       var mEl = document.getElementById('story');
       if (mEl && manifestoWords.length) {
