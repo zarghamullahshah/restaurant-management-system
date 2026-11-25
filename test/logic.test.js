@@ -1,6 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs } = require('../store.js');
+const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs,
+  seedState, ticketFor, openTicket, setTicketStatus, clearTicket } = require('../js/store.js');
 
 test('lineTotal multiplies price by quantity', () => {
   assert.equal(lineTotal({ price: 350, qty: 3 }), 1050);
@@ -72,4 +73,35 @@ test('billsOn filters by calendar day', () => {
 test('formatRs formats with Rs prefix and thousands separators', () => {
   assert.equal(formatRs(735), 'Rs 735');
   assert.equal(formatRs(12500), 'Rs 12,500');
+});
+
+test('kitchen ticket opens as new and keeps its placedAt on reopen', () => {
+  const s = seedState();
+  assert.equal(ticketFor(s, 't1'), null);
+  const t = openTicket(s, 't1', 'Ali Raza');
+  assert.equal(t.status, 'new');
+  assert.equal(t.byName, 'Ali Raza');
+  assert.ok(t.placedAt);
+  const again = openTicket(s, 't1', 'Someone Else');
+  assert.equal(again.placedAt, t.placedAt);
+  assert.equal(again.byName, 'Ali Raza');
+});
+
+test('kitchen ticket flows new -> preparing -> ready -> served, then reopens fresh', () => {
+  const s = seedState();
+  openTicket(s, 't2', 'Waiter');
+  setTicketStatus(s, 't2', 'preparing');
+  assert.equal(ticketFor(s, 't2').status, 'preparing');
+  setTicketStatus(s, 't2', 'ready');
+  setTicketStatus(s, 't2', 'served');
+  const fresh = openTicket(s, 't2', 'Waiter');
+  assert.equal(fresh.status, 'new');
+});
+
+test('clearTicket removes the ticket (bill closed / order cleared)', () => {
+  const s = seedState();
+  openTicket(s, 't3', 'Waiter');
+  clearTicket(s, 't3');
+  assert.equal(ticketFor(s, 't3'), null);
+  clearTicket(s, 't3'); // clearing twice is a no-op, not an error
 });
