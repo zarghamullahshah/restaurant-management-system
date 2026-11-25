@@ -3,179 +3,209 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Copper Kitchen — Restaurant Management</title>
-<meta name="description" content="Restaurant management system: tables, orders, menu and billing for The Copper Kitchen.">
-<link rel="stylesheet" href="styles.css">
+<title>The Copper Kitchen — Restaurant Management System</title>
+<meta name="description" content="Tables, live orders, menu management and billing in one screen. The Copper Kitchen restaurant management system — free, in your browser, no sign-up.">
+<link rel="stylesheet" href="landing.css">
 </head>
 <body>
-<div class="layout">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-mark">CK</div>
-      <div class="brand-text">
-        <span class="brand-name">The Copper Kitchen</span>
-        <span class="brand-sub">Restaurant Manager</span>
+
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">
+    <span class="brand-mark">CK</span>
+    <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
+  </a>
+  <nav class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#showcase">Inside the system</a>
+    <a href="#how">How it works</a>
+    <a href="#reviews">Reviews</a>
+  </nav>
+  <a class="btn btn-primary" href="app.html">Open the system</a>
+</header>
+
+<main id="top">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <span class="ring ring-a"></span><span class="ring ring-b"></span><span class="ring ring-c"></span>
+      <span class="dot-grid"></span>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow reveal">Restaurant management, minus the chaos</p>
+        <h1 class="reveal">Run the whole floor<br>from <em>one screen.</em></h1>
+        <p class="hero-sub reveal">Tables, live orders, the full menu and the bill — handled in a single place your whole team already knows how to use. No installs, no sign-up, no monthly fee.</p>
+        <div class="hero-ctas reveal">
+          <a class="btn btn-primary btn-lg" href="app.html">Launch the system
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-outline btn-lg" href="#showcase">See it inside</a>
+        </div>
+        <ul class="hero-points reveal">
+          <li>Free forever</li><li>Works on any device</li><li>Data stays on your machine</li>
+        </ul>
+      </div>
+
+      <div class="hero-stage reveal" id="hero-stage">
+        <div class="tilt" id="tilt">
+          <!-- Miniature of the real product UI -->
+          <div class="mock" aria-hidden="true">
+            <div class="mock-side">
+              <span class="mock-logo"></span>
+              <span class="mock-nav is-on"></span><span class="mock-nav"></span><span class="mock-nav"></span><span class="mock-nav"></span>
+            </div>
+            <div class="mock-main">
+              <div class="mock-head"><span class="mock-title"></span><span class="mock-btn"></span></div>
+              <div class="mock-stats">
+                <span class="mock-stat"></span><span class="mock-stat"></span><span class="mock-stat"></span><span class="mock-stat"></span>
+              </div>
+              <div class="mock-tables">
+                <span class="mock-table is-busy"></span><span class="mock-table"></span><span class="mock-table is-busy"></span>
+                <span class="mock-table"></span><span class="mock-table is-busy"></span><span class="mock-table"></span>
+              </div>
+              <div class="mock-lines"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+          <div class="float-card float-revenue" data-depth="18">
+            <small>Revenue today</small>
+            <strong>Rs <span class="count" data-count="18450">0</span></strong>
+            <span class="float-note">23 bills closed</span>
+          </div>
+          <div class="float-card float-order" data-depth="30">
+            <small>Table 4 · just now</small>
+            <strong>Chicken Karahi ×1 · Naan ×4</strong>
+            <span class="float-note">Bill Rs 2,145 — paid</span>
+          </div>
+          <div class="float-card float-badge" data-depth="42">
+            <strong>Bill closed</strong>
+            <span class="float-note">Table freed automatically</span>
+          </div>
+        </div>
       </div>
     </div>
-    <nav class="nav" aria-label="Main">
-      <button class="nav-item is-active" data-view="dashboard">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
-        Dashboard
-      </button>
-      <button class="nav-item" data-view="tables">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16a1 1 0 0 1 1 1v3H3V5a1 1 0 0 1 1-1zm-1 6h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9zm4 2v2h4v-2H7z"/></svg>
-        Tables &amp; Orders
-      </button>
-      <button class="nav-item" data-view="menu">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 4v2h10V7H7zm0 4v2h10v-2H7zm0 4v2h7v-2H7z"/></svg>
-        Menu
-      </button>
-      <button class="nav-item" data-view="history">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L6 7l6 6V9a6 6 0 1 1-6 6H4a8 8 0 1 0 8-10z"/></svg>
-        Sales History
-      </button>
-    </nav>
-    <div class="sidebar-foot">
-      <div class="open-badge"><span class="dot"></span> Open for service</div>
-      <p class="sidebar-note">Data is saved on this device.</p>
+    <a class="scroll-cue" href="#features" aria-label="Scroll down"><span></span></a>
+  </section>
+
+  <!-- ================= MARQUEE ================= -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Chicken Karahi</span><i>•</i><span>Seekh Kebab</span><i>•</i><span>Mutton Pulao</span><i>•</i><span>Chicken Biryani</span><i>•</i><span>Roghni Naan</span><i>•</i><span>Mint Margarita</span><i>•</i><span>Shahi Kheer</span><i>•</i><span>Kulfa Falooda</span><i>•</i>
+      <span>Chicken Karahi</span><i>•</i><span>Seekh Kebab</span><i>•</i><span>Mutton Pulao</span><i>•</i><span>Chicken Biryani</span><i>•</i><span>Roghni Naan</span><i>•</i><span>Mint Margarita</span><i>•</i><span>Shahi Kheer</span><i>•</i><span>Kulfa Falooda</span><i>•</i>
     </div>
-  </aside>
-
-  <main class="main">
-    <!-- DASHBOARD -->
-    <section class="view is-active" id="view-dashboard">
-      <header class="view-head">
-        <div>
-          <h1>Good service, <span class="accent">today</span></h1>
-          <p class="view-sub" id="today-line"></p>
-        </div>
-        <button class="btn btn-primary" data-goto="tables">New order</button>
-      </header>
-      <div class="stats">
-        <article class="stat-card reveal"><span class="stat-label">Revenue today</span><strong class="stat-value" id="stat-revenue">Rs 0</strong><span class="stat-hint" id="stat-revenue-hint"></span></article>
-        <article class="stat-card reveal"><span class="stat-label">Bills completed</span><strong class="stat-value" id="stat-bills">0</strong><span class="stat-hint">paid &amp; closed</span></article>
-        <article class="stat-card reveal"><span class="stat-label">Tables occupied</span><strong class="stat-value" id="stat-tables">0</strong><span class="stat-hint" id="stat-tables-hint"></span></article>
-        <article class="stat-card reveal"><span class="stat-label">Average bill</span><strong class="stat-value" id="stat-average">Rs 0</strong><span class="stat-hint">per completed bill</span></article>
-      </div>
-      <div class="grid-2">
-        <article class="panel reveal">
-          <div class="panel-head"><h2>Most ordered today</h2></div>
-          <ul class="rank-list" id="popular-list"></ul>
-          <p class="empty-note" id="popular-empty">No completed bills yet today. Finished orders will appear here.</p>
-        </article>
-        <article class="panel reveal">
-          <div class="panel-head"><h2>Recent bills</h2><button class="btn btn-ghost" data-goto="history">View all</button></div>
-          <ul class="recent-list" id="recent-list"></ul>
-          <p class="empty-note" id="recent-empty">Nothing here yet — close a bill from a table to see it.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- TABLES & ORDERS -->
-    <section class="view" id="view-tables">
-      <header class="view-head">
-        <div>
-          <h1>Tables &amp; orders</h1>
-          <p class="view-sub">Select a table to open or manage its order.</p>
-        </div>
-      </header>
-      <div class="tables-layout">
-        <div class="tables-grid" id="tables-grid"></div>
-        <article class="panel order-panel" id="order-panel">
-          <div class="panel-head">
-            <h2 id="order-title">No table selected</h2>
-            <span class="pill" id="order-status">—</span>
-          </div>
-          <div id="order-empty" class="order-empty">
-            <p>Choose a table on the left to start an order, add dishes from the menu, and print the bill when the guests are ready.</p>
-          </div>
-          <div id="order-body" hidden>
-            <ul class="order-lines" id="order-lines"></ul>
-            <div class="add-item">
-              <label for="menu-picker">Add a dish</label>
-              <div class="add-row">
-                <select id="menu-picker"></select>
-                <button class="btn btn-secondary" id="add-line-btn">Add</button>
-              </div>
-            </div>
-            <div class="bill-box">
-              <div class="bill-row"><span>Subtotal</span><span id="bill-subtotal">Rs 0</span></div>
-              <div class="bill-row"><span>Tax (5%)</span><span id="bill-tax">Rs 0</span></div>
-              <div class="bill-row bill-discount">
-                <label for="discount-input">Discount %</label>
-                <input type="number" id="discount-input" min="0" max="100" step="1" value="0">
-              </div>
-              <div class="bill-row bill-total"><span>Total</span><span id="bill-total">Rs 0</span></div>
-            </div>
-            <div class="order-actions">
-              <button class="btn btn-ghost" id="clear-order-btn">Clear order</button>
-              <button class="btn btn-primary" id="checkout-btn">Close bill &amp; free table</button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- MENU -->
-    <section class="view" id="view-menu">
-      <header class="view-head">
-        <div>
-          <h1>Menu</h1>
-          <p class="view-sub">Dishes the kitchen serves. Changes apply to new orders straight away.</p>
-        </div>
-        <button class="btn btn-primary" id="new-item-btn">Add dish</button>
-      </header>
-      <div class="menu-tools">
-        <div class="chips" id="category-chips"></div>
-        <input type="search" id="menu-search" placeholder="Search dishes..." aria-label="Search dishes">
-      </div>
-      <div class="menu-grid" id="menu-grid"></div>
-    </section>
-
-    <!-- HISTORY -->
-    <section class="view" id="view-history">
-      <header class="view-head">
-        <div>
-          <h1>Sales history</h1>
-          <p class="view-sub" id="history-summary"></p>
-        </div>
-        <button class="btn btn-ghost" id="export-btn">Download CSV</button>
-      </header>
-      <div class="panel">
-        <table class="history-table">
-          <thead><tr><th>Bill</th><th>When</th><th>Table</th><th>Items</th><th>Discount</th><th>Total</th></tr></thead>
-          <tbody id="history-body"></tbody>
-        </table>
-        <p class="empty-note" id="history-empty">No bills yet. Completed bills will be listed here.</p>
-      </div>
-    </section>
-  </main>
-</div>
-
-<!-- MENU ITEM MODAL -->
-<div class="modal-backdrop" id="item-modal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="item-modal-title">
-    <h2 id="item-modal-title">Add dish</h2>
-    <form id="item-form">
-      <input type="hidden" id="item-id">
-      <label>Dish name<input type="text" id="item-name" required maxlength="60" placeholder="e.g. Chicken Karahi (Half)"></label>
-      <label>Category
-        <select id="item-category">
-          <option>Starters</option><option>Mains</option><option>Breads &amp; Rice</option><option>Drinks</option><option>Desserts</option>
-        </select>
-      </label>
-      <label>Price (Rs)<input type="number" id="item-price" required min="1" step="1" placeholder="e.g. 850"></label>
-      <label class="check"><input type="checkbox" id="item-available" checked> Available to order</label>
-      <div class="modal-actions">
-        <button type="button" class="btn btn-ghost" data-close-modal>Cancel</button>
-        <button type="submit" class="btn btn-primary">Save dish</button>
-      </div>
-    </form>
   </div>
-</div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <!-- ================= STATS ================= -->
+  <section class="stats-band">
+    <div class="stat reveal"><strong><span class="count" data-count="18">0</span></strong><span>dishes pre-loaded, ready to sell</span></div>
+    <div class="stat reveal"><strong><span class="count" data-count="8">0</span></strong><span>tables tracked live, incl. family halls</span></div>
+    <div class="stat reveal"><strong><span class="count" data-count="5">0</span>%</strong><span>tax handled on every bill, automatically</span></div>
+    <div class="stat reveal"><strong>Rs <span class="count" data-count="0">0</span></strong><span>cost — free, no card, no trial clock</span></div>
+  </section>
 
-<script src="app.js"></script>
+  <!-- ================= FEATURES ================= -->
+  <section class="section" id="features">
+    <p class="eyebrow reveal">What it does</p>
+    <h2 class="reveal">Everything a busy floor needs.<br>Nothing it doesn't.</h2>
+    <div class="features">
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v3H3V5a1 1 0 0 1 1-1zm-1 6h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9z"/></svg></span>
+        <h3>Live table board</h3>
+        <p>Every table's status and running total at a glance. The moment a bill closes, the table frees itself — no whiteboard, no shouting across the room.</p>
+      </article>
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-2 2-2-2-2 2-2-2-3 2V3a1 1 0 0 1 1-1zm3 5v2h6V7H9zm0 4v2h6v-2H9z"/></svg></span>
+        <h3>Billing without mistakes</h3>
+        <p>Subtotal, discount applied before tax, 5% tax and the total — calculated for you, every time. The end-of-night argument about a wrong bill simply stops happening.</p>
+      </article>
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 4v2h10V7H7zm0 4v2h10v-2H7zm0 4v2h7v-2H7z"/></svg></span>
+        <h3>A menu you control</h3>
+        <p>Add a dish, change a price, mark the fish sold out — it applies to the next order instantly. Seasonal menu? Five minutes, not a reprint.</p>
+      </article>
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
+        <h3>A dashboard that talks</h3>
+        <p>Revenue today, bills closed, tables occupied, average bill — and which dishes are actually carrying your kitchen. Decisions stop being guesses.</p>
+      </article>
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 5V1L6 7l6 6V9a6 6 0 1 1-6 6H4a8 8 0 1 0 8-10z"/></svg></span>
+        <h3>History &amp; CSV export</h3>
+        <p>Every bill ever closed, searchable by day, ready to download as a spreadsheet for your accountant. Month-end takes minutes.</p>
+      </article>
+      <article class="feature reveal" data-tilt-card>
+        <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.7-.9 1-1.4 2-1.4 3.3H9c0-1.3-.5-2.3-1.4-3.3C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7zM9 20h6v2H9z"/></svg></span>
+        <h3>Works when the net doesn't</h3>
+        <p>Everything runs and saves on the device itself. Load-shedding, dead Wi-Fi, a tablet from 2019 — service carries on.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= SHOWCASE ================= -->
+  <section class="section section-dark" id="showcase">
+    <p class="eyebrow reveal">Inside the system</p>
+    <h2 class="reveal">A real menu, real prices,<br>real orders — from minute one.</h2>
+    <div class="showcase">
+      <article class="dish reveal"><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
+      <article class="dish reveal"><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
+      <article class="dish reveal"><span class="dish-cat">Mains</span><h3>Mutton Pulao</h3><p>Slow-cooked yakhni rice with tender mutton and whole spices.</p><strong>Rs 780</strong></article>
+      <article class="dish reveal"><span class="dish-cat">Desserts</span><h3>Kulfa Falooda</h3><p>Dense kulfa over rose falooda with basil seeds and crushed pistachio.</p><strong>Rs 420</strong></article>
+    </div>
+    <p class="showcase-note reveal">These are four of the 18 dishes pre-loaded in the system. Yours can be edited in seconds — <a href="app.html">try it live</a>.</p>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="section" id="how">
+    <p class="eyebrow reveal">How it works</p>
+    <h2 class="reveal">From first click to closed bill<br>in three moves.</h2>
+    <div class="steps">
+      <article class="step reveal"><span class="step-no">1</span><h3>Open a table</h3><p>Tap any free table. It turns occupied the moment the first dish lands.</p></article>
+      <span class="step-line" aria-hidden="true"></span>
+      <article class="step reveal"><span class="step-no">2</span><h3>Build the order</h3><p>Add dishes, adjust quantities, apply a discount if the moment calls for it. The bill builds itself as you go.</p></article>
+      <span class="step-line" aria-hidden="true"></span>
+      <article class="step reveal"><span class="step-no">3</span><h3>Close &amp; it's recorded</h3><p>One click closes the bill, frees the table and files it in today's sales — dashboard updated instantly.</p></article>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section class="section" id="reviews">
+    <p class="eyebrow reveal">From the floor</p>
+    <h2 class="reveal">Owners who stopped<br>doing bills on paper.</h2>
+    <div class="reviews">
+      <figure class="review reveal">
+        <blockquote>"Friday nights used to end with three of us matching paper slips. Now the last bill closes and we're done. It paid for itself the first weekend — and it was free."</blockquote>
+        <figcaption><strong>Imran Sheikh</strong><span>Owner, family restaurant · Lahore</span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <blockquote>"My staff learned it in one shift. No training, no manual. The table board alone ended the 'is table six free?' question forever."</blockquote>
+        <figcaption><strong>Sana Tariq</strong><span>Manager, cafe &amp; grill · Karachi</span></figcaption>
+      </figure>
+      <figure class="review reveal">
+        <blockquote>"The CSV export is the feature I didn't know I needed. My accountant gets one file at month-end instead of a shoebox of receipts."</blockquote>
+        <figcaption><strong>Bilal Ahmed</strong><span>Owner, desi kitchen · Islamabad</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="cta">
+    <div class="cta-inner reveal">
+      <h2>Your next service could run on this.</h2>
+      <p>Open it, seat a table, close a bill. Two minutes, no sign-up — then decide.</p>
+      <a class="btn btn-primary btn-lg" href="app.html">Open the system — it's free</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
+  <span class="footer-note">Built for real restaurants. Runs entirely in your browser — your data never leaves your device.</span>
+  <a href="app.html">Launch the system</a>
+</footer>
+
+<script src="landing.js"></script>
 </body>
 </html>
