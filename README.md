@@ -2,7 +2,12 @@
 
 A complete, working restaurant management system that runs entirely in the browser: tables, live orders, menu management, billing with tax and discounts, and a sales history with CSV export. Built for a real single-outlet restaurant — no sign-up, no server, no dependencies.
 
-**Live demo:** https://zarghamullahshah.github.io/restaurant-management-system/
+**Live demo:** https://zarghamullahshah.github.io/restaurant-management-system/ — the landing page opens first; the working system itself is one click away ("Open the system"), or directly at https://zarghamullahshah.github.io/restaurant-management-system/app.html
+
+## Pages
+
+- `index.html` — the product landing page: immersive hero with a 3D-tilting product stage and parallax cards, scroll-triggered reveals, animated counters, a scrolling dish marquee, feature and review sections. Motion is hand-built in vanilla CSS/JS (`landing.css`, `landing.js`) — scroll reveals via IntersectionObserver, easeOutCubic counters, transform-only animation, `prefers-reduced-motion` respected.
+- `app.html` — the management system itself (dashboard, tables & orders, menu, sales history), styled by `styles.css`, driven by `app.js`.
 
 ## What it does
 
