@@ -613,7 +613,7 @@ body.loading { overflow: hidden; }
 body.webgl { background: #0d0a07; }
 body.webgl main, body.webgl .footer { position: relative; z-index: 1; }
 body.webgl .hero { background: transparent; }
-body.webgl .hero-bg { display: none; }
+body.webgl .hero-bg { opacity: 0.52; }
 body.webgl .film-band { box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
 body.webgl .section {
   background: rgba(250, 246, 239, 0.985);
@@ -756,3 +756,54 @@ html { scrollbar-width: thin; scrollbar-color: var(--copper) #171310; }
 /* ---------- Continuous 3D scrub ---------- */
 [data-scrub] { transform-perspective: 1100px; }
 body.webgl .section { margin-top: 38px; margin-bottom: 38px; }
+
+/* ---------- Features: numbered, tighter ---------- */
+.feat { counter-increment: none; position: relative; overflow: hidden; }
+.feat::before {
+  content: attr(data-no);
+  position: absolute; right: 14px; top: 2px;
+  font-family: Georgia, serif; font-size: 52px; font-weight: 700;
+  color: transparent; -webkit-text-stroke: 1.2px rgba(178,106,43,0.28);
+  pointer-events: none;
+}
+.feat::after {
+  content: ""; position: absolute; left: 0; top: 0; height: 3px; width: 100%;
+  background: linear-gradient(90deg, var(--copper), rgba(178,106,43,0));
+  transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+.feat:hover::after { transform: scaleX(1); }
+
+/* ---------- Image motion: scroll-driven reveals + hover shine ---------- */
+@supports (animation-timeline: view()) {
+  .spot-media, .exp-media, .hgal-card {
+    animation: imgClip linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 75%;
+  }
+  @keyframes imgClip {
+    from { clip-path: inset(16% 9% 16% 9% round 30px); }
+    to { clip-path: inset(0 0 0 0 round 20px); }
+  }
+  .spot-media img, .exp-media img, .hgal-card img, .photo-band img {
+    animation: imgLight linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+  @keyframes imgLight {
+    from { filter: brightness(0.78) saturate(0.85); }
+    to { filter: brightness(1) saturate(1); }
+  }
+}
+.spot-media, .exp-media, .dish-card { position: relative; }
+.spot-media::after, .exp-media::after, .dish-card::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(105deg, transparent 42%, rgba(255,255,255,0.22) 50%, transparent 58%);
+  transform: translateX(-130%); transition: transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+.spot-media:hover::after, .exp-media:hover::after, .dish-card:hover::after { transform: translateX(130%); }
+.dish-card img, .exp-media img { transition: filter 0.7s cubic-bezier(0.22,1,0.36,1); }
+.dish-card:hover img { filter: saturate(1.15) brightness(1.05); }
+@media (prefers-reduced-motion: reduce) {
+  .spot-media, .exp-media, .hgal-card, .spot-media img, .exp-media img, .hgal-card img, .photo-band img { animation: none; }
+}
