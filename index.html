@@ -13,18 +13,35 @@
 <div class="scroll-progress" id="scroll-progress"></div>
 
 <header class="nav" id="nav">
-  <a class="brand" href="#top">
-    <span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span>
-    <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
-  </a>
-  <nav class="nav-links">
+  <div class="nav-inner">
+    <a class="brand" href="#top" aria-label="The Copper Kitchen — home">
+      <span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span>
+      <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="menu.html">Menu</a>
+      <a href="#features" data-spy="features">Features</a>
+      <a href="#showcase" data-spy="showcase">Inside the system</a>
+      <a href="#how" data-spy="how">How it works</a>
+      <a href="#reviews" data-spy="reviews">Reviews</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="nav-manager" href="manager.html">Manager system</a>
+      <a class="btn btn-primary nav-cta" href="booking.html">Book a table</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile">
     <a href="menu.html">Menu</a>
     <a href="#features">Features</a>
     <a href="#showcase">Inside the system</a>
     <a href="#how">How it works</a>
     <a href="#reviews">Reviews</a>
+    <a href="manager.html">Manager system</a>
+    <a class="btn btn-primary" href="booking.html">Book a table</a>
   </nav>
-  <a class="btn btn-primary" href="booking.html">Book a table</a>
 </header>
 
 <main id="top">
@@ -32,19 +49,25 @@
   <!-- ================= HERO ================= -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
-      <span class="ring ring-a"></span><span class="ring ring-b"></span><span class="ring ring-c"></span>
-      <span class="dot-grid"></span>
+      <img class="hero-photo" id="hero-photo" src="assets/hero-interior.jpg" alt="" fetchpriority="high">
+      <span class="hero-shade"></span>
+      <span class="hero-glow glow-a"></span><span class="hero-glow glow-b"></span>
+      <span class="ring ring-a"></span><span class="ring ring-b"></span>
     </div>
     <div class="hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow reveal">Restaurant management, minus the chaos</p>
-        <h1 class="reveal">Run the whole floor<br>from <em>one screen.</em></h1>
+        <p class="hero-pill reveal"><span class="pulse-dot"></span>Live now — tables, orders &amp; billing in one place</p>
+        <h1 class="hero-title" id="hero-title">Run the whole floor from <em>one screen.</em></h1>
         <p class="hero-sub reveal">Tables, live orders, the full menu and the bill — handled in a single place your whole team already knows how to use. No installs, no sign-up, no monthly fee.</p>
         <div class="hero-ctas reveal">
-          <a class="btn btn-primary btn-lg" href="booking.html">Book a table
+          <a class="btn btn-primary btn-lg btn-magnetic" href="booking.html">Book a table
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a class="btn btn-outline btn-lg" href="#showcase">See it inside</a>
+          <a class="btn btn-glass btn-lg btn-magnetic" href="manager.html">Open the manager system</a>
+        </div>
+        <div class="hero-trust reveal">
+          <span class="trust-faces" aria-hidden="true"><i>IS</i><i>ST</i><i>BA</i><i>+</i></span>
+          <span class="trust-text"><span class="trust-stars" aria-hidden="true">★★★★★</span>Trusted on real floors in Lahore, Karachi &amp; Islamabad</span>
         </div>
         <ul class="hero-points reveal">
           <li>Free forever</li><li>Works on any device</li><li>Data stays on your machine</li>
@@ -113,10 +136,10 @@
 
   <!-- ================= STATS ================= -->
   <section class="stats-band">
-    <div class="stat reveal"><strong><span class="count" data-count="19">0</span></strong><span>dishes pre-loaded, ready to sell</span></div>
-    <div class="stat reveal"><strong><span class="count" data-count="8">0</span></strong><span>tables tracked live, incl. family halls</span></div>
-    <div class="stat reveal"><strong><span class="count" data-count="5">0</span>%</strong><span>tax handled on every bill, automatically</span></div>
-    <div class="stat reveal"><strong>Rs <span class="count" data-count="0">0</span></strong><span>cost — free, no card, no trial clock</span></div>
+    <div class="stat reveal" data-reveal="up"><strong><span class="count" data-count="19">0</span></strong><span>dishes pre-loaded, ready to sell</span></div>
+    <div class="stat reveal" data-reveal="up"><strong><span class="count" data-count="8">0</span></strong><span>tables tracked live, incl. family halls</span></div>
+    <div class="stat reveal" data-reveal="up"><strong><span class="count" data-count="5">0</span>%</strong><span>tax handled on every bill, automatically</span></div>
+    <div class="stat reveal" data-reveal="up"><strong>Rs <span class="count" data-count="0">0</span></strong><span>cost — free, no card, no trial clock</span></div>
   </section>
 
   <!-- ================= FEATURES ================= -->
@@ -124,32 +147,32 @@
     <p class="eyebrow reveal">What it does</p>
     <h2 class="reveal">Everything a busy floor needs.<br>Nothing it doesn't.</h2>
     <div class="features">
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v3H3V5a1 1 0 0 1 1-1zm-1 6h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9z"/></svg></span>
         <h3>Live table board</h3>
         <p>Every table's status and running total at a glance. The moment a bill closes, the table frees itself — no whiteboard, no shouting across the room.</p>
       </article>
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-2 2-2-2-2 2-2-2-3 2V3a1 1 0 0 1 1-1zm3 5v2h6V7H9zm0 4v2h6v-2H9z"/></svg></span>
         <h3>Billing without mistakes</h3>
         <p>Subtotal, discount applied before tax, 5% tax and the total — calculated for you, every time. The end-of-night argument about a wrong bill simply stops happening.</p>
       </article>
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 3h16a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm3 4v2h10V7H7zm0 4v2h10v-2H7zm0 4v2h7v-2H7z"/></svg></span>
         <h3>A menu you control</h3>
         <p>Add a dish, change a price, mark the fish sold out — it applies to the next order instantly. Seasonal menu? Five minutes, not a reprint.</p>
       </article>
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg></span>
         <h3>A dashboard that talks</h3>
         <p>Revenue today, bills closed, tables occupied, average bill — and which dishes are actually carrying your kitchen. Decisions stop being guesses.</p>
       </article>
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 5V1L6 7l6 6V9a6 6 0 1 1-6 6H4a8 8 0 1 0 8-10z"/></svg></span>
         <h3>History &amp; CSV export</h3>
         <p>Every bill ever closed, searchable by day, ready to download as a spreadsheet for your accountant. Month-end takes minutes.</p>
       </article>
-      <article class="feature reveal" data-tilt-card>
+      <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.7-.9 1-1.4 2-1.4 3.3H9c0-1.3-.5-2.3-1.4-3.3C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7zM9 20h6v2H9z"/></svg></span>
         <h3>Works when the net doesn't</h3>
         <p>Everything runs and saves on the device itself. Load-shedding, dead Wi-Fi, a tablet from 2019 — service carries on.</p>
@@ -160,8 +183,8 @@
   <!-- ================= EXPERIENCE ================= -->
   <section class="section experience" id="experience">
     <div class="exp-media">
-      <figure class="exp-main reveal"><img src="assets/chef.jpg" alt="A chef's hands chopping fresh green chillies on a board" data-parallax="0.06" loading="lazy"></figure>
-      <figure class="exp-card reveal"><img src="assets/interior-dark.jpg" alt="The dining room at The Copper Kitchen in the evening" data-parallax="-0.05" loading="lazy"></figure>
+      <figure class="exp-main reveal" data-reveal="left"><img src="assets/chef.jpg" alt="A chef's hands chopping fresh green chillies on a board" data-parallax="0.06" loading="lazy"></figure>
+      <figure class="exp-card reveal" data-reveal="right"><img src="assets/interior-dark.jpg" alt="The dining room at The Copper Kitchen in the evening" data-parallax="-0.05" loading="lazy"></figure>
     </div>
     <div class="exp-copy">
       <p class="eyebrow reveal">The room, the craft</p>
@@ -181,10 +204,10 @@
     <p class="eyebrow reveal">Inside the system</p>
     <h2 class="reveal">A real menu, real prices,<br>real orders — from minute one.</h2>
     <div class="showcase">
-      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-karahi.jpg" alt="Chicken karahi served with naan" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
-      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-grill.jpg" alt="Seekh kebabs and mixed grill on a platter" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
-      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-biryani.jpg" alt="Chicken biryani with raita" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Biryani (Single)</h3><p>Layered dum biryani with raita and salad — the lunch rush in a plate.</p><strong>Rs 350</strong></article>
-      <article class="dish reveal"><span class="dish-img"><img src="assets/dish-samosa.jpg" alt="Crispy samosas with chutneys" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Crispy Samosa (2 pcs)</h3><p>Flaky, spiced potato filling, tamarind and mint chutneys on the side.</p><strong>Rs 150</strong></article>
+      <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-karahi.jpg" alt="Chicken karahi served with naan" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
+      <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-grill.jpg" alt="Seekh kebabs and mixed grill on a platter" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
+      <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-biryani.jpg" alt="Chicken biryani with raita" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Biryani (Single)</h3><p>Layered dum biryani with raita and salad — the lunch rush in a plate.</p><strong>Rs 350</strong></article>
+      <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-samosa.jpg" alt="Crispy samosas with chutneys" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Crispy Samosa (2 pcs)</h3><p>Flaky, spiced potato filling, tamarind and mint chutneys on the side.</p><strong>Rs 150</strong></article>
     </div>
     <p class="showcase-note reveal">These are four of the 19 dishes pre-loaded in the system. Yours can be edited in seconds — <a href="menu.html">see the full menu</a>.</p>
   </section>
@@ -194,11 +217,11 @@
     <p class="eyebrow reveal">How it works</p>
     <h2 class="reveal">From first click to closed bill<br>in three moves.</h2>
     <div class="steps">
-      <article class="step reveal"><span class="step-no">1</span><h3>Open a table</h3><p>Tap any free table. It turns occupied the moment the first dish lands.</p></article>
+      <article class="step reveal" data-reveal="zoom"><span class="step-no">1</span><h3>Open a table</h3><p>Tap any free table. It turns occupied the moment the first dish lands.</p></article>
       <span class="step-line" aria-hidden="true"></span>
-      <article class="step reveal"><span class="step-no">2</span><h3>Build the order</h3><p>Add dishes, adjust quantities, apply a discount if the moment calls for it. The bill builds itself as you go.</p></article>
+      <article class="step reveal" data-reveal="zoom"><span class="step-no">2</span><h3>Build the order</h3><p>Add dishes, adjust quantities, apply a discount if the moment calls for it. The bill builds itself as you go.</p></article>
       <span class="step-line" aria-hidden="true"></span>
-      <article class="step reveal"><span class="step-no">3</span><h3>Close &amp; it's recorded</h3><p>One click closes the bill, frees the table and files it in today's sales — dashboard updated instantly.</p></article>
+      <article class="step reveal" data-reveal="zoom"><span class="step-no">3</span><h3>Close &amp; it's recorded</h3><p>One click closes the bill, frees the table and files it in today's sales — dashboard updated instantly.</p></article>
     </div>
   </section>
 
@@ -207,15 +230,15 @@
     <p class="eyebrow reveal">From the floor</p>
     <h2 class="reveal">Owners who stopped<br>doing bills on paper.</h2>
     <div class="reviews">
-      <figure class="review reveal">
+      <figure class="review reveal" data-reveal="up">
         <blockquote>"Friday nights used to end with three of us matching paper slips. Now the last bill closes and we're done. It paid for itself the first weekend — and it was free."</blockquote>
         <figcaption><strong>Imran Sheikh</strong><span>Owner, family restaurant · Lahore</span></figcaption>
       </figure>
-      <figure class="review reveal">
+      <figure class="review reveal" data-reveal="up">
         <blockquote>"My staff learned it in one shift. No training, no manual. The table board alone ended the 'is table six free?' question forever."</blockquote>
         <figcaption><strong>Sana Tariq</strong><span>Manager, cafe &amp; grill · Karachi</span></figcaption>
       </figure>
-      <figure class="review reveal">
+      <figure class="review reveal" data-reveal="up">
         <blockquote>"The CSV export is the feature I didn't know I needed. My accountant gets one file at month-end instead of a shoebox of receipts."</blockquote>
         <figcaption><strong>Bilal Ahmed</strong><span>Owner, desi kitchen · Islamabad</span></figcaption>
       </figure>

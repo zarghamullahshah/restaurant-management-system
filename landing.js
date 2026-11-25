@@ -162,3 +162,105 @@ var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }, { passive: true });
   update();
 })();
+
+/* ---------- Hero headline — word-by-word entrance ---------- */
+(function heroTitle() {
+  var h = document.getElementById('hero-title');
+  if (!h || reduced) return;
+  var i = 0;
+  function wrapWords(node) {
+    Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+      if (child.nodeType === 3) {
+        var frag = document.createDocumentFragment();
+        child.textContent.split(/(\s+)/).forEach(function (part) {
+          if (!part) return;
+          if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var s = document.createElement('span');
+          s.className = 'w'; s.style.setProperty('--i', i++); s.textContent = part;
+          frag.appendChild(s);
+        });
+        node.replaceChild(frag, child);
+      } else if (child.nodeType === 1 && child.tagName !== 'BR') {
+        wrapWords(child);
+      } else if (child.nodeType === 1 && child.tagName === 'BR') {
+        // keep line break
+      }
+    });
+  }
+  wrapWords(h);
+})();
+
+/* ---------- Header — hide on scroll down, show on scroll up + scrollspy + mobile menu ---------- */
+(function headerMotion() {
+  var nav = document.getElementById('nav');
+  if (!nav) return;
+  var lastY = 0, ticking = false;
+  function update() {
+    var y = window.scrollY || 0;
+    if (y > 420 && y > lastY + 6) nav.classList.add('is-hidden');
+    else if (y < lastY - 4 || y <= 420) nav.classList.remove('is-hidden');
+    lastY = y; ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+
+  var burger = document.getElementById('nav-burger');
+  var menu = document.getElementById('mobile-menu');
+  if (burger && menu) {
+    burger.addEventListener('click', function () {
+      var open = menu.classList.toggle('is-open');
+      burger.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    menu.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        menu.classList.remove('is-open'); burger.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  if ('IntersectionObserver' in window && links.length) {
+    var byId = {};
+    links.forEach(function (l) { byId[l.dataset.spy] = l; });
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('is-active'); });
+          if (byId[e.target.id]) byId[e.target.id].classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-38% 0px -55% 0px' });
+    links.forEach(function (l) {
+      var sec = document.getElementById(l.dataset.spy);
+      if (sec) spy.observe(sec);
+    });
+  }
+})();
+
+/* ---------- Hero — photo parallax on scroll + magnetic buttons ---------- */
+(function heroMotion() {
+  if (reduced) return;
+  var photo = document.getElementById('hero-photo');
+  var ticking = false;
+  function update() {
+    var y = window.scrollY || 0;
+    if (photo && y < window.innerHeight * 1.2) photo.style.translate = '0 ' + (y * 0.22) + 'px';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+
+  document.querySelectorAll('.btn-magnetic').forEach(function (btn) {
+    btn.addEventListener('mousemove', function (e) {
+      var r = btn.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      btn.style.transform = 'translate(' + (x * 7) + 'px,' + (y * 6 - 2) + 'px)';
+    });
+    btn.addEventListener('mouseleave', function () { btn.style.transform = ''; });
+  });
+})();
