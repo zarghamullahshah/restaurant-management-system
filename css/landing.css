@@ -707,3 +707,48 @@ html { scrollbar-width: thin; scrollbar-color: var(--copper) #171310; }
 }
 .photo-band-line em { font-style: italic; color: #e8b06a; }
 .film-band { height: 88vh; }
+
+/* ---------- Hero, elevated ---------- */
+.hero-aura {
+  position: absolute; width: 760px; height: 760px; right: -180px; top: 2%;
+  background: radial-gradient(circle, rgba(178,106,43,0.34) 0%, rgba(178,106,43,0.10) 42%, transparent 66%);
+  filter: blur(28px); pointer-events: none; will-change: transform;
+}
+.hero-mark {
+  position: absolute; right: -1.5%; bottom: 1%; z-index: 0;
+  font-family: Georgia, serif; font-weight: 700; line-height: 1;
+  font-size: clamp(6rem, 17.5vw, 15.5rem); letter-spacing: 2px;
+  color: transparent; -webkit-text-stroke: 1.5px rgba(224,160,94,0.15);
+  pointer-events: none; user-select: none;
+  animation: markDrift 16s ease-in-out infinite alternate;
+}
+@keyframes markDrift { from { transform: translateX(0); } to { transform: translateX(-26px); } }
+.hero-title em { position: relative; }
+.hero-title em::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0.04em; height: 3px;
+  background: linear-gradient(90deg, #e0a05e, rgba(224,160,94,0.15));
+  border-radius: 3px; transform: scaleX(0); transform-origin: 0 50%;
+  animation: lineDraw 1s cubic-bezier(0.22,1,0.36,1) 1.15s forwards;
+}
+@keyframes lineDraw { to { transform: scaleX(1); } }
+.hero-pill, .hero-sub, .hero-ctas, .hero-trust, .hero-points {
+  animation: heroUp 0.95s cubic-bezier(0.22,1,0.36,1) both;
+}
+.hero-pill { animation-delay: 0.55s; }
+.hero-sub { animation-delay: 0.95s; }
+.hero-ctas { animation-delay: 1.1s; }
+.hero-trust { animation-delay: 1.28s; }
+.hero-points { animation-delay: 1.42s; }
+@keyframes heroUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+.hero-stage { animation: stageIn 1.25s cubic-bezier(0.22,1,0.36,1) 0.7s both, stageFloat 7.5s ease-in-out 2.1s infinite alternate; }
+@keyframes stageIn { from { opacity: 0; transform: translateY(44px) rotate(1.2deg); } to { opacity: 1; transform: translateY(0) rotate(0); } }
+@keyframes stageFloat { from { transform: translateY(0); } to { transform: translateY(-11px); } }
+.hero-pill { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 8px 24px rgba(0,0,0,0.25); }
+@media (max-width: 760px) {
+  .hero-mark { font-size: 26vw; opacity: 0.7; }
+  .hero-aura { width: 440px; height: 440px; right: -160px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mark, .hero-stage, .hero-pill, .hero-sub, .hero-ctas, .hero-trust, .hero-points { animation: none; }
+  .hero-title em::after { animation: none; transform: scaleX(1); }
+}
