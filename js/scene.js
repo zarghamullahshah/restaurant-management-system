@@ -1,10 +1,10 @@
 /* The Copper Kitchen — the living scene (WebGL)
    Igloo's grammar is not CSS tricks: it is ONE continuous 3D world
    behind the whole page, and scrolling moves the CAMERA through it.
-   This module builds that world with Three.js: a copper serving cloche
-   (lathe-turned geometry, real metal reflections), embers rising from
-   the grill, warm fog — and a camera that dollies and orbits as the
-   visitor travels down the page. Content floats above it on sheets.
+   This module builds that world with Three.js — pure atmosphere, no
+   objects: embers rising from the grill, warm fog, a slow-breathing
+   camera as the visitor travels down the page. Content floats above
+   it on sheets. Restraint is the point: the scene is felt, not stared at.
 
    Graceful by design: if WebGL or the CDN is unavailable, the page
    keeps its photographic design untouched (body.webgl is only added
@@ -49,38 +49,6 @@ function init() {
   var rim = new THREE.PointLight(0xb26a2b, 60, 30);
   rim.position.set(-5, 2, -3);
   scene.add(rim);
-
-  /* ---- The cloche: lathe-turned profile, polished copper ---- */
-  var pts = [];
-  pts.push(new THREE.Vector2(0.0, 0.02));
-  pts.push(new THREE.Vector2(1.55, 0.02));
-  pts.push(new THREE.Vector2(1.62, 0.10));
-  pts.push(new THREE.Vector2(1.60, 0.20));
-  pts.push(new THREE.Vector2(1.38, 0.62));
-  pts.push(new THREE.Vector2(1.02, 0.98));
-  pts.push(new THREE.Vector2(0.62, 1.18));
-  pts.push(new THREE.Vector2(0.30, 1.28));
-  pts.push(new THREE.Vector2(0.16, 1.34));
-  pts.push(new THREE.Vector2(0.17, 1.46));
-  pts.push(new THREE.Vector2(0.10, 1.54));
-  pts.push(new THREE.Vector2(0.0, 1.56));
-  var clocheGeo = new THREE.LatheGeometry(pts, 72);
-  var copper = new THREE.MeshStandardMaterial({
-    color: 0xc47b3a, metalness: 1.0, roughness: 0.28
-  });
-  var cloche = new THREE.Mesh(clocheGeo, copper);
-  cloche.position.set(2.1, -0.9, -1.2);
-  cloche.scale.setScalar(1.35);
-  scene.add(cloche);
-
-  /* Serving plate under the cloche */
-  var plate = new THREE.Mesh(
-    new THREE.CylinderGeometry(1.95, 2.05, 0.09, 72),
-    new THREE.MeshStandardMaterial({ color: 0x8a5a28, metalness: 1.0, roughness: 0.4 })
-  );
-  plate.position.set(2.1, -0.98, -1.2);
-  plate.scale.setScalar(1.35);
-  scene.add(plate);
 
   /* ---- Embers: points with a soft radial sprite ---- */
   function emberTexture() {
@@ -143,20 +111,11 @@ function init() {
     smY += (mouseY - smY) * 0.04;
     var p = smoothP;
 
-    /* Camera travel: dolly in, gentle orbit, mouse parallax on top */
-    camera.position.x = Math.sin(p * Math.PI * 0.55) * -2.4 + smX * 0.7;
-    camera.position.y = 0.4 - p * 1.1 - smY * 0.5;
-    camera.position.z = 10 - p * 4.2;
-    camera.lookAt(0.6, -0.2, -1);
-
-    /* The cloche turns with the journey and breathes when idle */
-    cloche.rotation.y = p * Math.PI * 1.6 + t * 0.05;
-    plate.rotation.y = cloche.rotation.y;
-    var drift = 2.1 - p * 3.4;
-    cloche.position.x = drift;
-    plate.position.x = drift;
-    cloche.position.y = -0.9 + Math.sin(t * 0.6) * 0.07;
-    plate.position.y = -0.98 + Math.sin(t * 0.6) * 0.07;
+    /* Camera drift: a slow, subtle dolly and sway — atmosphere only */
+    camera.position.x = Math.sin(p * Math.PI * 0.5) * -1.1 + smX * 0.6;
+    camera.position.y = 0.4 - p * 0.7 - smY * 0.45 + Math.sin(t * 0.24) * 0.05;
+    camera.position.z = 10 - p * 2.6;
+    camera.lookAt(0, 0, -1);
 
     /* Embers rise forever, swaying like heat over a grill */
     var arr = emberGeo.attributes.position.array;
