@@ -1,0 +1,145 @@
+/* The Copper Kitchen — staff login, kitchen display & waiter extras.
+   Loaded alongside manager.css on chef/waiter pages; standalone on login. */
+
+:root {
+  --ink: #221c15; --ink-2: #171310; --ink-soft: #5f574c;
+  --paper: #faf6ef; --surface: #ffffff; --line: #e7ddcd;
+  --copper: #b26a2b; --copper-dark: #93531f; --amber-bg: #f6e8d8;
+  --green: #2e7d46; --green-bg: #e7f3ea; --red: #b3372a; --red-bg: #fbeae7;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Staff chip (sidebar / topbar identity) ---------- */
+.staff-chip {
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 12px; padding: 9px 10px; margin-top: 10px;
+}
+.staff-avatar {
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  background: var(--copper); color: #fff; font-weight: 800; font-size: 13px;
+  display: grid; place-items: center;
+}
+.staff-meta { line-height: 1.15; min-width: 0; }
+.staff-meta strong { display: block; font-size: 13.5px; color: #fdf8ee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.staff-meta small { font-size: 11px; color: #b8a888; letter-spacing: 0.6px; text-transform: uppercase; }
+.staff-logout {
+  margin-left: auto; flex: none; background: none; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.25); color: #f3ead9;
+  font-size: 12px; font-weight: 700; border-radius: 8px; padding: 6px 9px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.staff-logout:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.45); }
+
+/* ---------- Login page ---------- */
+.login-wrap {
+  min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+}
+.login-art {
+  position: relative; overflow: hidden; background: var(--ink-2);
+  display: flex; align-items: flex-end; padding: 44px;
+}
+.login-art img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.85; }
+.login-art::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(16,12,8,0.92) 0%, rgba(16,12,8,0.15) 55%);
+}
+.login-art-copy { position: relative; z-index: 2; color: #fdf8ee; }
+.login-art-copy h2 { font-family: Georgia, serif; font-size: clamp(1.8rem, 3.4vw, 2.7rem); line-height: 1.12; margin: 0 0 10px; }
+.login-art-copy p { color: #d8c9a8; margin: 0; max-width: 420px; line-height: 1.6; font-size: 15px; }
+.login-panel {
+  display: flex; align-items: center; justify-content: center; padding: 40px 28px;
+  background: var(--paper);
+}
+.login-card { width: 100%; max-width: 430px; }
+.login-card .brand-row { display: flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+.login-card .brand-row img { width: 46px; height: 46px; border-radius: 12px; }
+.login-card .brand-row strong { font-family: Georgia, serif; font-size: 19px; display: block; line-height: 1.1; }
+.login-card .brand-row small { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); }
+.login-card h1 { font-family: Georgia, serif; font-size: 27px; margin: 0 0 6px; }
+.login-card .sub { color: var(--ink-soft); font-size: 14.5px; margin: 0 0 22px; line-height: 1.55; }
+.role-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px; }
+.role-card {
+  border: 1.5px solid var(--line); background: var(--surface); border-radius: 14px;
+  padding: 15px 10px 12px; cursor: pointer; text-align: center;
+  transition: all 0.22s var(--ease); font-family: inherit;
+}
+.role-card:hover { transform: translateY(-2px); border-color: var(--copper); }
+.role-card.is-on { border-color: var(--copper); background: var(--amber-bg); box-shadow: 0 10px 22px rgba(178,106,43,0.18); }
+.role-card svg { width: 26px; height: 26px; fill: var(--copper-dark); }
+.role-card strong { display: block; font-size: 14.5px; margin-top: 7px; }
+.role-card small { display: block; font-size: 11px; color: var(--ink-soft); margin-top: 3px; line-height: 1.35; }
+.login-field { margin-bottom: 13px; }
+.login-field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.login-field input {
+  width: 100%; box-sizing: border-box; padding: 12px 14px; font-size: 15px; font-family: inherit;
+  border: 1.5px solid var(--line); border-radius: 11px; background: var(--surface);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.login-field input:focus { outline: none; border-color: var(--copper); box-shadow: 0 0 0 4px rgba(178,106,43,0.15); }
+.login-error {
+  display: none; background: var(--red-bg); color: var(--red); border: 1px solid #efc4bd;
+  border-radius: 10px; padding: 10px 13px; font-size: 13.5px; font-weight: 600; margin-bottom: 13px;
+}
+.login-error.show { display: block; animation: shake 0.4s; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.login-btn {
+  width: 100%; padding: 14px; font-size: 15.5px; border: none; cursor: pointer;
+  background: var(--copper); color: #fff; border-radius: 12px; font-weight: 800; font-family: inherit;
+  box-shadow: 0 12px 24px rgba(178,106,43,0.32); transition: all 0.2s var(--ease);
+}
+.login-btn:hover { background: var(--copper-dark); transform: translateY(-1px); }
+.login-hint {
+  margin-top: 18px; background: var(--surface); border: 1px dashed var(--line);
+  border-radius: 12px; padding: 13px 15px; font-size: 13px; color: var(--ink-soft); line-height: 1.7;
+}
+.login-hint strong { color: var(--ink); }
+.login-back { display: inline-block; margin-top: 16px; font-size: 13.5px; font-weight: 700; color: var(--copper-dark); text-decoration: none; }
+.login-back:hover { text-decoration: underline; }
+@media (max-width: 860px) {
+  .login-wrap { grid-template-columns: 1fr; }
+  .login-art { min-height: 240px; padding: 28px; }
+}
+
+/* ---------- Kitchen display (chef) ---------- */
+.kitchen-top {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  background: var(--ink); color: #f3ead9; border-radius: 15px; padding: 16px 20px; margin-bottom: 18px;
+}
+.kitchen-top .kt-title { font-family: Georgia, serif; font-size: 21px; }
+.kitchen-top .kt-clock { font-family: Georgia, serif; font-size: 21px; color: #e0a05e; margin-left: auto; }
+.kitchen-top .staff-chip { margin-top: 0; }
+.kds-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; align-items: start; }
+.kds-col h2 { font-size: 15px; letter-spacing: 1.2px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; margin: 0 0 12px; }
+.kds-col h2 .cnt { background: var(--ink); color: #fff; border-radius: 999px; font-size: 12px; padding: 2px 9px; letter-spacing: 0; }
+.kds-col-new h2 { color: var(--red); } .kds-col-new h2 .cnt { background: var(--red); }
+.kds-col-prep h2 { color: #8a6414; } .kds-col-prep h2 .cnt { background: #b98a1e; }
+.kds-col-ready h2 { color: var(--green); } .kds-col-ready h2 .cnt { background: var(--green); }
+.ticket {
+  background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px;
+  padding: 16px; margin-bottom: 12px; box-shadow: 0 8px 20px rgba(34,28,21,0.06);
+  animation: ticketIn 0.45s var(--ease);
+}
+@keyframes ticketIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+.ticket.is-new { border-color: #efc4bd; }
+.ticket.is-ready { border-color: #bfe0c9; background: #f4faf5; }
+.ticket-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 9px; }
+.ticket-head .tt { font-family: Georgia, serif; font-size: 18px; }
+.ticket-head .age { font-size: 12.5px; font-weight: 800; color: var(--ink-soft); white-space: nowrap; }
+.ticket-head .age.late { color: var(--red); }
+.ticket ul { list-style: none; margin: 0 0 11px; padding: 0; }
+.ticket li { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px dashed var(--line); font-size: 14.5px; }
+.ticket li:last-child { border-bottom: none; }
+.ticket li .q { font-weight: 800; color: var(--copper-dark); }
+.ticket .by { font-size: 12px; color: var(--ink-soft); margin-bottom: 11px; }
+.ticket .btn { width: 100%; justify-content: center; }
+.kds-empty { color: var(--ink-soft); font-size: 14px; border: 1.5px dashed var(--line); border-radius: 14px; padding: 20px; text-align: center; line-height: 1.6; }
+@media (max-width: 900px) { .kds-board { grid-template-columns: 1fr; } }
+
+/* Kitchen status pills on table cards (waiter + manager) */
+.pill-kitchen-new { background: #fbeae7; color: var(--red); }
+.pill-kitchen-preparing { background: #fdf0d5; color: #8a6414; }
+.pill-kitchen-ready { background: var(--green); color: #fff; animation: readyPulse 1.6s infinite; }
+.pill-kitchen-served { background: var(--green-bg); color: var(--green); }
+@keyframes readyPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(46,125,70,0.45); } 50% { box-shadow: 0 0 0 6px rgba(46,125,70,0); } }
+.kitchen-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 4px 0 12px; font-size: 13.5px; color: var(--ink-soft); }

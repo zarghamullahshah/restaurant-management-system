@@ -6,9 +6,29 @@
 <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
 <title>The Copper Kitchen — Restaurant Management System</title>
 <meta name="description" content="Tables, live orders, menu management and billing in one screen. The Copper Kitchen restaurant management system — free, in your browser, no sign-up.">
-<link rel="stylesheet" href="landing.css">
+<link rel="stylesheet" href="css/landing.css">
 </head>
 <body>
+
+<!-- Cinematic loader (Igloo-style entry) -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-inner">
+    <img src="assets/logo.svg" alt="" class="loader-logo">
+    <p class="loader-name">The Copper Kitchen</p>
+    <p class="loader-count"><span id="loader-pct">0</span>%</p>
+    <p class="loader-hint">Setting the tables…</p>
+  </div>
+</div>
+
+<!-- Chapter rail -->
+<nav class="rail" id="rail" aria-hidden="true">
+  <a data-chapter="top" class="is-on"><span>Intro</span></a>
+  <a data-chapter="film"><span>Film</span></a>
+  <a data-chapter="features"><span>Features</span></a>
+  <a data-chapter="experience"><span>Craft</span></a>
+  <a data-chapter="showcase"><span>Menu</span></a>
+  <a data-chapter="reviews"><span>Reviews</span></a>
+</nav>
 
 <div class="scroll-progress" id="scroll-progress"></div>
 
@@ -26,7 +46,7 @@
       <a href="#reviews" data-spy="reviews">Reviews</a>
     </nav>
     <div class="nav-actions">
-      <a class="nav-manager" href="manager.html">Manager system</a>
+      <a class="nav-manager" href="login.html">Staff login</a>
       <a class="btn btn-primary nav-cta" href="booking.html">Book a table</a>
       <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
@@ -39,7 +59,7 @@
     <a href="#showcase">Inside the system</a>
     <a href="#how">How it works</a>
     <a href="#reviews">Reviews</a>
-    <a href="manager.html">Manager system</a>
+    <a href="login.html">Staff login</a>
     <a class="btn btn-primary" href="booking.html">Book a table</a>
   </nav>
 </header>
@@ -57,13 +77,13 @@
     <div class="hero-inner">
       <div class="hero-copy">
         <p class="hero-pill reveal"><span class="pulse-dot"></span>Live now — tables, orders &amp; billing in one place</p>
-        <h1 class="hero-title" id="hero-title">Run the whole floor from <em>one screen.</em></h1>
+        <h1 class="hero-title" id="hero-title" data-split>Run the whole floor from <em>one screen.</em></h1>
         <p class="hero-sub reveal">Tables, live orders, the full menu and the bill — handled in a single place your whole team already knows how to use. No installs, no sign-up, no monthly fee.</p>
         <div class="hero-ctas reveal">
           <a class="btn btn-primary btn-lg btn-magnetic" href="booking.html">Book a table
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <a class="btn btn-glass btn-lg btn-magnetic" href="manager.html">Open the manager system</a>
+          <a class="btn btn-glass btn-lg btn-magnetic" href="login.html">Staff login</a>
         </div>
         <div class="hero-trust reveal">
           <span class="trust-faces" aria-hidden="true"><i>IS</i><i>ST</i><i>BA</i><i>+</i></span>
@@ -115,8 +135,8 @@
   </section>
 
   <!-- ================= FILM BAND ================= -->
-  <section class="film-band reveal" aria-label="Inside a service at The Copper Kitchen">
-    <video class="film" autoplay muted loop playsinline preload="metadata" poster="assets/hero-interior.jpg" id="film">
+  <section class="film-band reveal" id="film" aria-label="Inside a service at The Copper Kitchen">
+    <video class="film" autoplay muted loop playsinline preload="metadata" poster="assets/hero-interior.jpg" id="film-video">
       <source src="assets/kitchen.mp4" type="video/mp4">
     </video>
     <div class="film-overlay">
@@ -145,7 +165,7 @@
   <!-- ================= FEATURES ================= -->
   <section class="section" id="features">
     <p class="eyebrow reveal">What it does</p>
-    <h2 class="reveal">Everything a busy floor needs.<br>Nothing it doesn't.</h2>
+    <h2 class="reveal" data-split>Everything a busy floor needs. Nothing it doesn’t.</h2>
     <div class="features">
       <article class="feature reveal" data-reveal="up" data-tilt-card>
         <span class="feature-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v3H3V5a1 1 0 0 1 1-1zm-1 6h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-9z"/></svg></span>
@@ -188,21 +208,31 @@
     </div>
     <div class="exp-copy">
       <p class="eyebrow reveal">The room, the craft</p>
-      <h2 class="reveal">Built by people who have worked a pass.</h2>
+      <h2 class="reveal" data-split>Built by people who have worked a pass.</h2>
       <p class="reveal">Software for restaurants is usually written by people who have never survived a Friday night. This one is shaped around how a floor actually moves — the glance at the table board, the bill that must be right the first time, the menu that changes with the market.</p>
       <p class="reveal">Open the kitchen, keep the dining room calm, and let the numbers look after themselves.</p>
-      <div class="gallery reveal">
-        <figure><img src="assets/hero-interior.jpg" alt="Open kitchen and dining room" loading="lazy"><figcaption>The open kitchen</figcaption></figure>
-        <figure><img src="assets/gallery-rice.jpg" alt="A bowl of chicken dum biryani" loading="lazy"><figcaption>Dum biryani, daily</figcaption></figure>
-        <figure><img src="assets/dish-grill.jpg" alt="Charcoal grill platter with kebabs" loading="lazy"><figcaption>From the charcoal grill</figcaption></figure>
+      <p class="gallery-hint">Keep scrolling — the room moves sideways.</p>
+    </div>
+  </section>
+
+  <!-- ================= HORIZONTAL GALLERY ================= -->
+  <section class="hgal" id="gallery">
+    <div class="hgal-sticky">
+      <div class="hgal-track" id="hgal-track">
+        <figure class="hgal-item"><img src="assets/hero-interior.jpg" alt="Open kitchen and dining room"><figcaption>The open kitchen</figcaption></figure>
+        <figure class="hgal-item"><img src="assets/gallery-rice.jpg" alt="A bowl of chicken dum biryani"><figcaption>Dum biryani, daily</figcaption></figure>
+        <figure class="hgal-item"><img src="assets/dish-grill.jpg" alt="Charcoal grill platter with kebabs"><figcaption>From the charcoal grill</figcaption></figure>
+        <figure class="hgal-item"><img src="assets/chef.jpg" alt="Chef preparing fresh chillies"><figcaption>Prepped by hand</figcaption></figure>
+        <figure class="hgal-item"><img src="assets/interior-dark.jpg" alt="The dining room in the evening"><figcaption>Evenings at the Copper Kitchen</figcaption></figure>
       </div>
+      <p class="hgal-caption">The room, the food, the craft — one service at a time.</p>
     </div>
   </section>
 
   <!-- ================= SHOWCASE ================= -->
   <section class="section section-dark" id="showcase">
     <p class="eyebrow reveal">Inside the system</p>
-    <h2 class="reveal">A real menu, real prices,<br>real orders — from minute one.</h2>
+    <h2 class="reveal" data-split>A real menu, real prices, real orders — from minute one.</h2>
     <div class="showcase">
       <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-karahi.jpg" alt="Chicken karahi served with naan" loading="lazy"></span><span class="dish-cat">Mains</span><h3>Chicken Karahi (Half)</h3><p>Wok-tossed with tomato, green chilli and ginger — the dish the house is known for.</p><strong>Rs 1,450</strong></article>
       <article class="dish reveal" data-reveal="zoom"><span class="dish-img"><img src="assets/dish-grill.jpg" alt="Seekh kebabs and mixed grill on a platter" loading="lazy"></span><span class="dish-cat">Starters</span><h3>Seekh Kebab (4 pcs)</h3><p>Hand-minced, charcoal-grilled, served with mint chutney and onion rings.</p><strong>Rs 550</strong></article>
@@ -215,7 +245,7 @@
   <!-- ================= HOW IT WORKS ================= -->
   <section class="section" id="how">
     <p class="eyebrow reveal">How it works</p>
-    <h2 class="reveal">From first click to closed bill<br>in three moves.</h2>
+    <h2 class="reveal" data-split>From first click to closed bill in three moves.</h2>
     <div class="steps">
       <article class="step reveal" data-reveal="zoom"><span class="step-no">1</span><h3>Open a table</h3><p>Tap any free table. It turns occupied the moment the first dish lands.</p></article>
       <span class="step-line" aria-hidden="true"></span>
@@ -228,7 +258,7 @@
   <!-- ================= REVIEWS ================= -->
   <section class="section" id="reviews">
     <p class="eyebrow reveal">From the floor</p>
-    <h2 class="reveal">Owners who stopped<br>doing bills on paper.</h2>
+    <h2 class="reveal" data-split>Owners who stopped doing bills on paper.</h2>
     <div class="reviews">
       <figure class="review reveal" data-reveal="up">
         <blockquote>"Friday nights used to end with three of us matching paper slips. Now the last bill closes and we're done. It paid for itself the first weekend — and it was free."</blockquote>
@@ -259,9 +289,9 @@
 <footer class="footer">
   <span class="brand-text">The Copper Kitchen<small>Restaurant Manager</small></span>
   <span class="footer-note">Built for real restaurants. Runs entirely in your browser — your data never leaves your device.</span>
-  <a href="manager.html">Manager system</a>
+  <a href="login.html">Staff login</a>
 </footer>
 
-<script src="landing.js"></script>
+<script src="js/landing.js"></script>
 </body>
 </html>

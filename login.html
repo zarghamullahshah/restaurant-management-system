@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Staff login — The Copper Kitchen</title>
+<meta name="description" content="Staff login for The Copper Kitchen — separate workspaces for the manager, the chef and the waiters.">
+<link rel="stylesheet" href="css/staff.css">
+<style>
+  body { margin: 0; font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif; background: #faf6ef; color: #221c15; }
+</style>
+</head>
+<body>
+
+<div class="login-wrap">
+  <div class="login-art" aria-hidden="true">
+    <img class="bg" src="assets/chef.jpg" alt="">
+    <div class="login-art-copy">
+      <h2>One kitchen.<br>Three workspaces.</h2>
+      <p>The manager runs the floor, the chef runs the pass, the waiters run the tables — and every screen reads the same live orders.</p>
+    </div>
+  </div>
+
+  <div class="login-panel">
+    <form class="login-card" id="login-form" novalidate>
+      <div class="brand-row">
+        <img src="assets/logo.svg" alt="The Copper Kitchen logo">
+        <span><strong>The Copper Kitchen</strong><small>Staff login</small></span>
+      </div>
+      <h1>Who's on shift?</h1>
+      <p class="sub">Pick your role, add your name and your PIN. You'll land in your own workspace — the kitchen and the floor stay in sync.</p>
+
+      <div class="role-grid" id="role-grid">
+        <button type="button" class="role-card" data-role="manager">
+          <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          <strong>Manager</strong><small>Dashboard, bookings, menu &amp; sales</small>
+        </button>
+        <button type="button" class="role-card" data-role="chef">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.7-.9 1-1.4 2-1.4 3.3H9c0-1.3-.5-2.3-1.4-3.3C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7zM9 20h6v2H9z"/></svg>
+          <strong>Chef</strong><small>Kitchen display &amp; live tickets</small>
+        </button>
+        <button type="button" class="role-card" data-role="waiter">
+          <svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-2 2-2-2-2 2-2-2-3 2V3a1 1 0 0 1 1-1zm3 5v2h6V7H9zm0 4v2h6v-2H9z"/></svg>
+          <strong>Waiter</strong><small>My tables, orders &amp; ready alerts</small>
+        </button>
+      </div>
+
+      <div class="login-error" id="login-error" role="alert"></div>
+
+      <div class="login-field">
+        <label for="staff-name">Your name</label>
+        <input id="staff-name" type="text" autocomplete="name" placeholder="e.g. Ali Raza">
+      </div>
+      <div class="login-field">
+        <label for="staff-pin">PIN</label>
+        <input id="staff-pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="Your role PIN">
+      </div>
+
+      <button class="login-btn" type="submit">Enter my workspace</button>
+
+      <div class="login-hint">
+        <strong>Demo PINs</strong> (shown on purpose — this is a front-end demo):<br>
+        Manager <strong>1234</strong> · Chef <strong>2345</strong> · Waiter <strong>3456</strong>
+      </div>
+
+      <a class="login-back" href="index.html">← Back to the website</a>
+    </form>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

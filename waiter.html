@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Waiter Floor — The Copper Kitchen</title>
+<link rel="stylesheet" href="css/manager.css">
+<link rel="stylesheet" href="css/staff.css">
+</head>
+<body data-requires="staff">
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span><span class="brand-name">The Copper Kitchen<small>Waiter System</small></span></a>
+    <span class="nav-label">My shift</span>
+    <a class="nav-item is-active" href="waiter.html"><svg viewBox="0 0 24 24"><path d="M6 2h12a1 1 0 0 1 1 1v18l-3-2-2 2-2-2-2 2-2-2-3 2V3a1 1 0 0 1 1-1zm3 5v2h6V7H9zm0 4v2h6v-2H9z"/></svg>My Floor</a>
+    <span class="nav-label">Staff</span>
+    <a class="nav-item" href="chef.html"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.7-.9 1-1.4 2-1.4 3.3H9c0-1.3-.5-2.3-1.4-3.3C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7zM9 20h6v2H9z"/></svg>Kitchen Display</a>
+    <a class="nav-item" href="manager.html"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Manager System</a>
+    <span class="nav-label">Guest side</span>
+    <a class="nav-item" href="menu.html"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm1 5h-2v6l5.2 3.1 1-1.7-4.2-2.5V7z"/></svg>Guest Menu</a>
+    <div id="staff-slot"></div>
+    <p class="sidebar-foot">Adding a dish sends it to the kitchen instantly. When the chef marks it ready, your table lights up green.<br><a href="index.html">← Back to the website</a></p>
+  </aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div><h1 id="waiter-title">My floor</h1><p class="sub">Pick a table, take the order — the kitchen sees it the second you add a dish.</p></div>
+    </div>
+    <div class="card is-alert" id="ready-alert" hidden style="margin-bottom:15px;border-color:#bfe0c9;background:#f4faf5"></div>
+    <div class="orders-grid">
+      <section class="card"><h2>Tables</h2><div class="tables-grid" id="tables-grid"></div></section>
+      <section class="card" id="order-panel"></section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script src="js/store.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/manager-common.js"></script>
+<script src="js/waiter.js"></script>
+</body>
+</html>
