@@ -39,11 +39,13 @@
       <button class="btn btn-ghost" id="show-all">Show all days</button>
     </div>
     <div class="card" style="padding:8px 22px">
+      <div class="table-scroll">
       <table class="sales-table">
         <thead><tr><th>Bill</th><th>When</th><th>Table</th><th>Items</th><th>Discount</th><th>Total</th></tr></thead>
         <tbody id="sales-body"></tbody>
         <tfoot><tr><td colspan="5">Total</td><td id="sales-total">Rs 0</td></tr></tfoot>
       </table>
+      </div>
       <p class="empty" id="sales-empty" hidden>No bills for this selection yet.</p>
     </div>
   </main>

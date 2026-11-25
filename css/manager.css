@@ -157,3 +157,27 @@ label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .dash-grid, .orders-grid { grid-template-columns: 1fr; }
 }
+
+/* Wide tables scroll sideways instead of breaking the page on phones */
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll .menu-table, .table-scroll .sales-table { min-width: 560px; }
+
+@media (max-width: 620px) {
+  .main { padding: 22px 16px 40px; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-card .v { font-size: 27px; }
+  .tables-grid { grid-template-columns: 1fr; }
+  .booking-card { grid-template-columns: 1fr; }
+  .booking-actions { flex-direction: row; }
+  .booking-actions .btn { flex: 1; justify-content: center; }
+  .card { padding: 18px; }
+  .page-head h1 { font-size: 25px; }
+}
+@media (max-width: 1020px) {
+  .sidebar { flex-direction: row; align-items: center; flex-wrap: wrap; gap: 8px; padding: 14px 16px; }
+  .brand { padding: 0 4px 0 0; }
+  .nav-label, .sidebar-foot { display: none; }
+  .nav-item { width: auto; padding: 9px 13px; }
+  .nav-badge { margin-left: 6px; }
+  .staff-chip { margin-top: 0; flex: 1 1 100%; }
+}
