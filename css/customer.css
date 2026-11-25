@@ -174,3 +174,16 @@ a { color: inherit; }
 .st-cancelled { background: #eee7da; color: #5f574c; }
 body { padding-bottom: 0; }
 main.wrap { padding-bottom: 110px; }
+
+@media (max-width: 620px) {
+  .topbar { padding: 12px 20px; }
+  .page-hero-inner { padding: 76px 20px 44px; }
+  .wrap { padding: 34px 20px 56px; }
+  .panel { padding: 20px; }
+  .field-row { grid-template-columns: 1fr; }
+  .dish-card { grid-template-columns: 1fr; }
+  .dish-card .ph { height: 150px; }
+  .dish-foot { flex-wrap: wrap; }
+  .cart-bar { max-width: calc(100vw - 24px); padding: 12px 16px; gap: 12px; }
+  .cart-bar-total { font-size: 15.5px; }
+}
