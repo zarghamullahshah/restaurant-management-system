@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Book a table — The Copper Kitchen</title>
+<meta name="description" content="Reserve a table at The Copper Kitchen — pick your date, time and party size; the manager confirms from the live bookings inbox.">
+<link rel="stylesheet" href="customer.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span><span class="brand-text">The Copper Kitchen<small>Reservations</small></span></a>
+  <nav class="topnav">
+    <a href="index.html">Home</a>
+    <a href="menu.html">Menu</a>
+    <a href="manager.html">Manager</a>
+    <a class="btn btn-primary" href="booking.html">Book a table</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <img class="bg" src="assets/hero-interior.jpg" alt="">
+  <div class="shade"></div>
+  <div class="page-hero-inner">
+    <p class="eyebrow">Reservations</p>
+    <h1>Book your table</h1>
+    <p>Tell us when, and for how many. Your request lands straight in the manager's bookings inbox — keep your reference to check its status any time.</p>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="book-grid">
+    <section class="panel" id="book-panel">
+      <h2>Reservation details</h2>
+      <p class="sub">We hold a confirmed table for 15 minutes past the booked time.</p>
+      <div class="form-error" id="form-error"></div>
+      <form id="book-form" novalidate>
+        <div class="field-row">
+          <div class="field"><label for="f-name">Your name</label><input id="f-name" type="text" placeholder="e.g. Ahmed Raza" autocomplete="name"></div>
+          <div class="field"><label for="f-phone">Mobile number</label><input id="f-phone" type="tel" placeholder="03xx xxxxxxx" autocomplete="tel"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-guests">Guests</label>
+            <select id="f-guests"><option>2</option><option>3</option><option selected>4</option><option>5</option><option>6</option><option>8</option><option>10</option><option>12</option></select></div>
+          <div class="field"><label for="f-area">Seating</label>
+            <select id="f-area"><option>Main hall</option><option>Family hall</option><option>Near the open kitchen</option><option>Quiet corner</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="f-date">Date</label><input id="f-date" type="date"></div>
+          <div class="field"><label for="f-time">Time</label>
+            <select id="f-time">
+              <option>12:30 PM</option><option>1:30 PM</option><option>3:00 PM</option>
+              <option>6:00 PM</option><option selected>7:30 PM</option><option>8:30 PM</option>
+              <option>9:30 PM</option><option>10:30 PM</option>
+            </select></div>
+        </div>
+        <div class="field"><label for="f-notes">Anything we should know? <span style="color:var(--ink-soft);font-weight:400">(optional)</span></label>
+          <textarea id="f-notes" rows="3" placeholder="Birthday, wheelchair access, a quiet table…"></textarea></div>
+        <button class="btn btn-primary btn-lg" type="submit" style="width:100%;justify-content:center">Request this table</button>
+      </form>
+    </section>
+
+    <aside class="panel">
+      <h2>Your bookings</h2>
+      <p class="sub">Enter the mobile number you booked with to see the live status of your reservations.</p>
+      <div class="field"><label for="lookup-phone">Mobile number</label><input id="lookup-phone" type="tel" placeholder="03xx xxxxxxx"></div>
+      <button class="btn btn-outline" id="lookup-btn" style="width:100%;justify-content:center">Find my bookings</button>
+      <div id="lookup-results" style="margin-top:18px"></div>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <span>The Copper Kitchen — good food, honest bills.</span>
+  <span>Changed your mind? Call us and quote your reference.</span>
+</footer>
+
+<script src="store.js"></script>
+<script src="booking.js"></script>
+</body>
+</html>

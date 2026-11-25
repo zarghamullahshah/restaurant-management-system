@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+<title>Menu — The Copper Kitchen</title>
+<meta name="description" content="The Copper Kitchen menu — karahis, charcoal grill, biryani and more, with live prices from the kitchen.">
+<link rel="stylesheet" href="customer.css">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/logo.svg" alt="The Copper Kitchen logo"></span><span class="brand-text">The Copper Kitchen<small>Guest Menu</small></span></a>
+  <nav class="topnav">
+    <a href="index.html">Home</a>
+    <a href="menu.html" class="is-here">Menu</a>
+    <a href="manager.html">Manager</a>
+    <a class="btn btn-primary" href="booking.html">Book a table</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <img class="bg" src="assets/dish-grill.jpg" alt="">
+  <div class="shade"></div>
+  <div class="page-hero-inner">
+    <p class="eyebrow">From the kitchen</p>
+    <h1>The menu</h1>
+    <p>Live from the same list the kitchen cooks from — if a dish sells out, it disappears here too. Prices include everything except the 5% tax added on your bill.</p>
+  </div>
+</section>
+
+<main class="wrap">
+  <div class="chips" id="chips"></div>
+  <div class="dish-grid" id="dish-grid"></div>
+  <p class="empty-note" id="empty" hidden>Nothing available in this section right now — the kitchen updates it through the day.</p>
+</main>
+
+<footer class="footer">
+  <span>The Copper Kitchen — good food, honest bills.</span>
+  <span>Ready when you are: <a href="booking.html">book a table</a></span>
+</footer>
+
+<script src="store.js"></script>
+<script src="menu.js"></script>
+</body>
+</html>
