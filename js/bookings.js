@@ -11,7 +11,7 @@ var seatingBookingId = null;
 var FILTERS = [
   { key: 'all', label: 'All' }, { key: 'pending', label: 'Waiting' },
   { key: 'confirmed', label: 'Confirmed' }, { key: 'seated', label: 'Seated' },
-  { key: 'cancelled', label: 'Cancelled' }
+  { key: 'no-show', label: 'No-show' }, { key: 'cancelled', label: 'Cancelled' }
 ];
 
 function prettyDate(dateStr) {
@@ -35,6 +35,7 @@ function actionsFor(b) {
   }
   if (b.status === 'pending' || b.status === 'confirmed') {
     btns += '<button class="btn btn-primary btn-sm" data-act="seat" data-id="' + b.id + '">Seat at a table</button>';
+    btns += '<button class="btn btn-ghost btn-sm" data-act="no-show" data-id="' + b.id + '">No-show</button>';
     btns += '<button class="btn btn-danger btn-sm" data-act="cancel" data-id="' + b.id + '">Cancel</button>';
   }
   if (b.status === 'seated') {
@@ -88,6 +89,10 @@ document.getElementById('booking-list').addEventListener('click', function (e) {
   if (btn.dataset.act === 'confirm') {
     b.status = 'confirmed'; saveState(state); renderAll();
     toast(b.ref + ' confirmed — the guest sees it live');
+  }
+  if (btn.dataset.act === 'no-show') {
+    b.status = 'no-show'; b.tableId = null; saveState(state); renderAll();
+    toast(b.ref + ' marked as no-show');
   }
   if (btn.dataset.act === 'cancel') {
     b.status = 'cancelled'; b.tableId = null; saveState(state); renderAll();
