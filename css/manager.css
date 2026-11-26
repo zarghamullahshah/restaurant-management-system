@@ -132,6 +132,7 @@ label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
 .status-confirmed { background: var(--green-bg); color: var(--green); }
 .status-seated { background: var(--blue-bg); color: var(--blue); }
 .status-cancelled { background: var(--red-bg); color: var(--red); }
+.status-no-show { background: #f3e2d3; color: #7a4a12; }
 .ref { font-family: Georgia, serif; color: var(--copper-dark); font-weight: 700; }
 
 /* Sales */
@@ -180,4 +181,26 @@ label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
   .nav-item { width: auto; padding: 9px 13px; }
   .nav-badge { margin-left: 6px; }
   .staff-chip { margin-top: 0; flex: 1 1 100%; }
+}
+
+/* ---- Reports page ---- */
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 190px; padding-top: 18px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; min-width: 0; }
+.bar { width: 100%; max-width: 34px; background: var(--copper); border-radius: 6px 6px 0 0; transition: height .5s var(--ease); }
+.bar-col:hover .bar { background: var(--copper-dark); }
+.bar-val { font-size: 11px; font-weight: 700; color: var(--ink-soft); white-space: nowrap; margin-bottom: 5px; }
+.bar-label { font-size: 11px; color: var(--ink-soft); margin-top: 7px; white-space: nowrap; }
+.top-list { list-style: none; margin: 0; padding: 0; counter-reset: top; }
+.top-list li {
+  counter-increment: top; display: flex; justify-content: space-between; gap: 12px;
+  padding: 11px 2px; border-bottom: 1px solid var(--line); font-size: 15px;
+}
+.top-list li:last-child { border-bottom: 0; }
+.top-list li::before {
+  content: counter(top) "."; font-weight: 800; color: var(--copper); margin-right: 2px;
+}
+.top-list li span { flex: 1; }
+@media (max-width: 860px) {
+  .report-cols { grid-template-columns: 1fr !important; }
+  .bar-val { display: none; }
 }

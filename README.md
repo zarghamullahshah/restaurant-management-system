@@ -19,7 +19,7 @@ the second it is placed.
 
 | Role    | PIN  | Workspace      | What it does                                                       |
 | ------- | ---- | -------------- | ------------------------------------------------------------------ |
-| Manager | 1234 | `manager.html` | Dashboard, tables & orders, bookings inbox, menu editor, sales     |
+| Manager | 1234 | `manager.html` | Dashboard, tables & orders, bookings inbox, menu editor, sales, reports |
 | Chef    | 2345 | `chef.html`    | Kitchen display: live tickets — new → preparing → ready            |
 | Waiter  | 3456 | `waiter.html`  | Floor system: tables, order-taking, ready alerts, mark served      |
 

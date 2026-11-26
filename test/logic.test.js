@@ -2,7 +2,8 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs,
   seedState, ticketFor, openTicket, setTicketStatus, clearTicket,
-  newOrderRef, onlineOrderTotal, priceOrderLines } = require('../js/store.js');
+  newOrderRef, onlineOrderTotal, priceOrderLines,
+  revenueByDay, revenueByCategory, averageOrderValue } = require('../js/store.js');
 
 test('lineTotal multiplies price by quantity', () => {
   assert.equal(lineTotal({ price: 350, qty: 3 }), 1050);
@@ -124,4 +125,42 @@ test('online order total prices lines from the live menu plus 5% tax', () => {
   // 2 x 350 = 700 subtotal, tax = 35, total 735
   assert.equal(onlineOrderTotal(s, order), 735);
   assert.equal(priceOrderLines(s, order.lines)[0].name, 'Chicken Biryani (Single)');
+});
+
+test('revenueByDay returns every day in the range, oldest first', () => {
+  const bills = [
+    { closedAt: '2026-11-26T12:00:00.000Z', total: 1000, lines: [] },
+    { closedAt: '2026-11-26T19:00:00.000Z', total: 500, lines: [] },
+    { closedAt: '2026-11-24T12:00:00.000Z', total: 700, lines: [] }
+  ];
+  const days = revenueByDay(bills, 3, '2026-11-26');
+  assert.deepEqual(days.map((d) => d.date), ['2026-11-24', '2026-11-25', '2026-11-26']);
+  assert.deepEqual(days.map((d) => d.total), [700, 0, 1500]);
+  assert.deepEqual(days.map((d) => d.count), [1, 0, 2]);
+});
+
+test('revenueByCategory groups by menu category, removed dishes go to Other', () => {
+  const menu = [
+    { name: 'Chicken Biryani (Single)', category: 'Mains' },
+    { name: 'Mint Margarita', category: 'Drinks' }
+  ];
+  const bills = [{
+    total: 1000,
+    lines: [
+      { name: 'Chicken Biryani (Single)', price: 350, qty: 2 },
+      { name: 'Mint Margarita', price: 250, qty: 1 },
+      { name: 'Old Dish (gone)', price: 100, qty: 1 }
+    ]
+  }];
+  const cats = revenueByCategory(bills, menu);
+  assert.equal(cats[0].category, 'Mains');
+  assert.equal(cats[0].total, 700);
+  assert.equal(cats[0].qty, 2);
+  assert.equal(cats.find((c) => c.category === 'Other').total, 100);
+  assert.deepEqual(revenueByCategory([], menu), []);
+});
+
+test('averageOrderValue rounds and returns 0 with no bills', () => {
+  assert.equal(averageOrderValue([{ total: 100 }, { total: 101 }]), 101); // 100.5 -> 101
+  assert.equal(averageOrderValue([]), 0);
 });

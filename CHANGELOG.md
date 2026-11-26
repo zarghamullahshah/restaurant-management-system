@@ -7,6 +7,12 @@ versions are dated while the project is pre-1.0.
 ## [Unreleased]
 
 ### Added
+- Reports page (`reports.html`): 14-day revenue chart, revenue by category,
+  best sellers, average bill and best day, with a 14-day CSV download.
+  New pure reporting functions in the store (`revenueByDay`,
+  `revenueByCategory`, `averageOrderValue`), covered by 3 new tests.
+- No-show marking on the bookings inbox: a confirmed or waiting booking
+  whose guests never arrive can be marked no-show, with its own filter.
 - A longer, more cinematic landing journey: a scroll-scrubbed manifesto
   statement, three dish spotlights, an illustrated service timeline
   whose line draws as you scroll, an FAQ accordion and a giant-type

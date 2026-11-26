@@ -56,6 +56,55 @@ function billsOn(bills, date) {
 
 function formatRs(n) { return 'Rs ' + Number(n).toLocaleString('en-PK'); }
 
+function ymd(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+/* bills -> last `days` days ending on endDateStr (YYYY-MM-DD, default
+   today): [{date, total, count}] oldest first; days with no bills read 0. */
+function revenueByDay(bills, days, endDateStr) {
+  var end = new Date((endDateStr || todayStr()) + 'T00:00:00');
+  var out = [];
+  for (var i = days - 1; i >= 0; i--) {
+    var d = new Date(end);
+    d.setDate(d.getDate() - i);
+    var dayBills = billsOn(bills, d);
+    out.push({
+      date: ymd(d),
+      total: dayBills.reduce(function (s, b) { return s + b.total; }, 0),
+      count: dayBills.length
+    });
+  }
+  return out;
+}
+
+/* bills + menu -> [{category, total, qty}] best first. Bill lines are
+   matched to menu items by name; lines from dishes since removed from
+   the menu fall under 'Other'. */
+function revenueByCategory(bills, menu) {
+  var byName = {};
+  menu.forEach(function (m) { byName[m.name] = m.category; });
+  var totals = {};
+  bills.forEach(function (b) {
+    b.lines.forEach(function (l) {
+      var cat = byName[l.name] || 'Other';
+      if (!totals[cat]) totals[cat] = { category: cat, total: 0, qty: 0 };
+      totals[cat].total += l.price * l.qty;
+      totals[cat].qty += l.qty;
+    });
+  });
+  return Object.keys(totals).map(function (k) { return totals[k]; })
+    .sort(function (a, b) { return b.total - a.total; });
+}
+
+/* Average bill value across a set of bills; 0 when there are none. */
+function averageOrderValue(bills) {
+  if (!bills.length) return 0;
+  return Math.round(bills.reduce(function (s, b) { return s + b.total; }, 0) / bills.length);
+}
+
 function todayStr() {
   var d = new Date();
   return d.getFullYear() + '-' +
@@ -219,6 +268,8 @@ if (typeof module !== 'undefined' && module.exports) {
     CATEGORIES: CATEGORIES, lineTotal: lineTotal, orderSubtotal: orderSubtotal,
     computeBill: computeBill, popularItems: popularItems, billsOn: billsOn,
     formatRs: formatRs, todayStr: todayStr, newBookingRef: newBookingRef,
+    revenueByDay: revenueByDay, revenueByCategory: revenueByCategory,
+    averageOrderValue: averageOrderValue,
     seedState: seedState, pricedLines: pricedLines, orderTotal: orderTotal,
     tableStatus: tableStatus, ticketFor: ticketFor, openTicket: openTicket,
     setTicketStatus: setTicketStatus, clearTicket: clearTicket,
