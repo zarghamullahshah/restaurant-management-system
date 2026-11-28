@@ -112,6 +112,71 @@ function todayStr() {
     String(d.getDate()).padStart(2, '0');
 }
 
+function addDaysStr(dateStr, n) {
+  var d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return ymd(d);
+}
+
+/* ---- Staff rota ----
+   staff: { id, name, role } — the team on the rota.
+   shifts: { id, staffId, date (YYYY-MM-DD), start/end (HH:MM) } */
+var SEED_STAFF = [
+  { id: 'st1', name: 'Ali Raza', role: 'Waiter' },
+  { id: 'st2', name: 'Bilal Ahmed', role: 'Waiter' },
+  { id: 'st3', name: 'Sana Malik', role: 'Chef' },
+  { id: 'st4', name: 'Usman Tariq', role: 'Chef' },
+  { id: 'st5', name: 'Ayesha Noor', role: 'Cashier' },
+  { id: 'st6', name: 'Hassan Raza', role: 'Waiter' }
+];
+
+function hhmmToMin(hhmm) {
+  var p = String(hhmm || '').split(':');
+  return Number(p[0]) * 60 + Number(p[1]);
+}
+
+/* Minutes in one shift; 0 when the end is not after the start. */
+function shiftMinutes(shift) {
+  var mins = hhmmToMin(shift.end) - hhmmToMin(shift.start);
+  return mins > 0 ? mins : 0;
+}
+
+/* True when the new shift would overlap one the same person already
+   works that day (back-to-back shifts are fine). */
+function hasShiftConflict(shifts, staffId, date, start, end) {
+  var s = hhmmToMin(start), e = hhmmToMin(end);
+  return shifts.some(function (sh) {
+    return sh.staffId === staffId && sh.date === date &&
+      s < hhmmToMin(sh.end) && hhmmToMin(sh.start) < e;
+  });
+}
+
+/* One day's shifts, earliest start first. */
+function shiftsOn(shifts, date) {
+  return shifts.filter(function (sh) { return sh.date === date; })
+    .sort(function (a, b) { return hhmmToMin(a.start) - hhmmToMin(b.start); });
+}
+
+/* Monday (YYYY-MM-DD) of the week containing dateStr. */
+function weekStartStr(dateStr) {
+  var d = new Date(dateStr + 'T00:00:00');
+  d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  return ymd(d);
+}
+
+/* Hours one person is rostered Monday to Sunday of the week starting
+   weekStart, to one decimal place. */
+function staffWeekHours(shifts, staffId, weekStart) {
+  var end = addDaysStr(weekStart, 6);
+  var mins = shifts.reduce(function (sum, sh) {
+    if (sh.staffId === staffId && sh.date >= weekStart && sh.date <= end) return sum + shiftMinutes(sh);
+    return sum;
+  }, 0);
+  return Math.round(mins / 60 * 10) / 10;
+}
+
+function staffById(state, id) { return state.staff.find(function (s) { return s.id === id; }); }
+
 function newBookingRef(existing) {
   var ref;
   do { ref = 'CK-' + Math.floor(1000 + Math.random() * 9000); }
@@ -166,7 +231,13 @@ function seedState() {
     bills: [],       // { id, tableName, lines, subtotal, discountPct, discount, tax, total, itemCount, closedAt }
     bookings: [],    // { id, ref, name, phone, guests, date, time, area, notes, status, tableId }
     kitchen: {},     // tableId -> { status: new|preparing|ready|served, placedAt, byName }
-    onlineOrders: [] // { id, ref, name, phone, type, tableId, lines, notes, status, placedAt, kitchenKey }
+    onlineOrders: [], // { id, ref, name, phone, type, tableId, lines, notes, status, placedAt, kitchenKey }
+    staff: JSON.parse(JSON.stringify(SEED_STAFF)),
+    shifts: [        // { id, staffId, date, start, end } — the staff rota
+      { id: 'sh1', staffId: 'st1', date: todayStr(), start: '10:00', end: '18:00' },
+      { id: 'sh2', staffId: 'st3', date: todayStr(), start: '12:00', end: '22:00' },
+      { id: 'sh3', staffId: 'st2', date: addDaysStr(todayStr(), 1), start: '10:00', end: '18:00' }
+    ]
   };
 }
 
@@ -182,6 +253,8 @@ function loadState() {
         if (!Array.isArray(s.bookings)) s.bookings = [];
         if (!s.kitchen) s.kitchen = {};
         if (!Array.isArray(s.onlineOrders)) s.onlineOrders = [];
+        if (!Array.isArray(s.staff)) s.staff = JSON.parse(JSON.stringify(SEED_STAFF));
+        if (!Array.isArray(s.shifts)) s.shifts = [];
         return s;
       }
     }
@@ -269,7 +342,11 @@ if (typeof module !== 'undefined' && module.exports) {
     computeBill: computeBill, popularItems: popularItems, billsOn: billsOn,
     formatRs: formatRs, todayStr: todayStr, newBookingRef: newBookingRef,
     revenueByDay: revenueByDay, revenueByCategory: revenueByCategory,
-    averageOrderValue: averageOrderValue,
+    averageOrderValue: averageOrderValue, SEED_STAFF: SEED_STAFF,
+    hhmmToMin: hhmmToMin, shiftMinutes: shiftMinutes,
+    hasShiftConflict: hasShiftConflict, shiftsOn: shiftsOn,
+    addDaysStr: addDaysStr, weekStartStr: weekStartStr,
+    staffWeekHours: staffWeekHours, staffById: staffById,
     seedState: seedState, pricedLines: pricedLines, orderTotal: orderTotal,
     tableStatus: tableStatus, ticketFor: ticketFor, openTicket: openTicket,
     setTicketStatus: setTicketStatus, clearTicket: clearTicket,

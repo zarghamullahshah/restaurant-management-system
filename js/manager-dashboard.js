@@ -37,3 +37,13 @@ document.getElementById('recent-list').innerHTML = recent.length
         '<span class="amt">' + formatRs(b.total) + '</span></div>';
     }).join('')
   : '<p class="empty">Nothing here yet — close a bill from a table to see it.</p>';
+
+var todayShifts = shiftsOn(state.shifts, todayStr());
+document.getElementById('rota-list').innerHTML = todayShifts.length
+  ? todayShifts.map(function (sh) {
+      var person = staffById(state, sh.staffId);
+      return '<div class="pop-row"><span>' + (person ? person.name : '—') +
+        ' <span class="qty" style="font-weight:400;color:var(--ink-soft)">' + (person ? person.role : '') + '</span></span>' +
+        '<span class="qty">' + sh.start + '–' + sh.end + '</span></div>';
+    }).join('')
+  : '<p class="empty">Nobody rostered today yet.</p>';

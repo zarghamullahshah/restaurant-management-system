@@ -7,6 +7,12 @@ versions are dated while the project is pre-1.0.
 ## [Unreleased]
 
 ### Added
+- Staff rota (`shifts.html`): six named staff (waiters, chefs, cashier),
+  assign/remove shifts per day with overlap checks, day totals, staff
+  with no shift that day, and weekly hours per person (Monday–Sunday).
+  The manager dashboard shows who is on shift today. New pure rota
+  functions in the store (`shiftMinutes`, `hasShiftConflict`,
+  `shiftsOn`, `staffWeekHours`), covered by 4 new tests.
 - Reports page (`reports.html`): 14-day revenue chart, revenue by category,
   best sellers, average bill and best day, with a 14-day CSV download.
   New pure reporting functions in the store (`revenueByDay`,

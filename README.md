@@ -40,6 +40,7 @@ production system.
 ├── bookings.html         Reservation inbox (manager)
 ├── menu-editor.html      Menu management (manager)
 ├── sales.html            Sales history + CSV export (manager)
+├── shifts.html           Staff rota: assign shifts, week hours (manager)
 ├── chef.html             Kitchen display system
 ├── waiter.html           Waiter floor system
 ├── css/                  landing · customer · manager · staff stylesheets
@@ -67,7 +68,9 @@ together.
   guests track by phone: waiting → confirmed → seated.
 - **Manager system** — revenue dashboard, tables & orders with the full
   billing breakdown, a bookings inbox (confirm / seat / cancel — the
-  guest sees it live), a menu editor, and sales history with CSV export.
+  guest sees it live), a menu editor, sales history with CSV export, and
+  a staff rota (assign shifts, conflict-checked, with weekly hours per
+  person and an "on shift today" card on the dashboard).
 - **Kitchen link** — adding a dish opens a kitchen ticket; the chef works
   it new → preparing → ready; the waiter's table lights up green, they
   mark it served, and closing the bill clears the ticket.
@@ -91,9 +94,10 @@ python3 -m http.server 8000
 node --test test/logic.test.js
 ```
 
-15 tests cover the pure logic in `js/store.js`: billing maths, discount
-clamping, day filtering, popularity aggregation and the kitchen ticket
-lifecycle.
+22 tests cover the pure logic in `js/store.js`: billing maths, discount
+clamping, day filtering, popularity aggregation, the kitchen ticket
+lifecycle, and the staff rota (shift length, overlap checks, day lists
+and weekly hours).
 
 ## Media
 

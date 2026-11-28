@@ -16,7 +16,8 @@ manager.html          Manager dashboard          ┐
 orders.html           Tables & orders            │ manager role
 bookings.html         Reservation inbox          │
 menu-editor.html      Menu management            │
-sales.html            Sales history + CSV        ┘
+sales.html            Sales history + CSV        │
+shifts.html           Staff rota                 ┘
 chef.html             Kitchen display system (KDS)
 waiter.html           Waiter floor system
 css/                  One stylesheet per audience (landing, customer, manager, staff)
@@ -41,10 +42,18 @@ One module owns all state. Pages never touch `localStorage` directly.
   - `bills[]` — closed bills with priced line snapshots and totals
   - `bookings[]` — guest reservations with a `CK-####` reference
   - `kitchen` — `tableId -> { status, placedAt, byName }` (see below)
+  - `staff[]` — the rota team `{ id, name, role }` (waiters, chefs, cashier)
+  - `shifts[]` — rota entries `{ id, staffId, date, start, end }`
 - **Billing rules (unit-tested):** discount is applied **before** the 5%
   tax; percentages are clamped to 0–100; money is rounded to whole rupees.
   Bills store priced line snapshots, so later menu edits never rewrite
   history.
+
+- **Rota rules (unit-tested):** a shift's end must be after its start;
+  one person cannot hold two overlapping shifts on the same day, but
+  back-to-back shifts are allowed; weekly hours run Monday to Sunday
+  and are shown to one decimal place. The dashboard lists today's
+  shifts from the same store, so a rota change shows there at once.
 
 ## Roles & sessions (`js/auth.js`, `login.html`)
 

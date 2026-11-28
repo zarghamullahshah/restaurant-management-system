@@ -3,7 +3,8 @@ const assert = require('node:assert/strict');
 const { TAX_RATE, computeBill, orderSubtotal, lineTotal, popularItems, billsOn, formatRs,
   seedState, ticketFor, openTicket, setTicketStatus, clearTicket,
   newOrderRef, onlineOrderTotal, priceOrderLines,
-  revenueByDay, revenueByCategory, averageOrderValue } = require('../js/store.js');
+  revenueByDay, revenueByCategory, averageOrderValue,
+  shiftMinutes, hasShiftConflict, shiftsOn, weekStartStr, staffWeekHours } = require('../js/store.js');
 
 test('lineTotal multiplies price by quantity', () => {
   assert.equal(lineTotal({ price: 350, qty: 3 }), 1050);
@@ -163,4 +164,47 @@ test('revenueByCategory groups by menu category, removed dishes go to Other', ()
 test('averageOrderValue rounds and returns 0 with no bills', () => {
   assert.equal(averageOrderValue([{ total: 100 }, { total: 101 }]), 101); // 100.5 -> 101
   assert.equal(averageOrderValue([]), 0);
+});
+
+test('shiftMinutes counts the shift, and 0 when it ends before it starts', () => {
+  assert.equal(shiftMinutes({ start: '10:00', end: '18:00' }), 480);
+  assert.equal(shiftMinutes({ start: '12:30', end: '22:00' }), 570);
+  assert.equal(shiftMinutes({ start: '18:00', end: '10:00' }), 0);
+  assert.equal(shiftMinutes({ start: '10:00', end: '10:00' }), 0);
+});
+
+test('hasShiftConflict catches overlaps for the same person and day only', () => {
+  const shifts = [{ staffId: 'st1', date: '2026-11-27', start: '10:00', end: '18:00' }];
+  assert.equal(hasShiftConflict(shifts, 'st1', '2026-11-27', '12:00', '20:00'), true);
+  assert.equal(hasShiftConflict(shifts, 'st1', '2026-11-27', '08:00', '10:00'), false); // back-to-back
+  assert.equal(hasShiftConflict(shifts, 'st1', '2026-11-27', '18:00', '22:00'), false); // back-to-back
+  assert.equal(hasShiftConflict(shifts, 'st2', '2026-11-27', '12:00', '20:00'), false); // other person
+  assert.equal(hasShiftConflict(shifts, 'st1', '2026-11-28', '12:00', '20:00'), false); // other day
+});
+
+test('shiftsOn returns one day, earliest start first', () => {
+  const shifts = [
+    { staffId: 'st1', date: '2026-11-27', start: '12:00', end: '22:00' },
+    { staffId: 'st2', date: '2026-11-27', start: '10:00', end: '18:00' },
+    { staffId: 'st1', date: '2026-11-28', start: '10:00', end: '18:00' }
+  ];
+  const day = shiftsOn(shifts, '2026-11-27');
+  assert.equal(day.length, 2);
+  assert.equal(day[0].staffId, 'st2');
+  assert.equal(day[1].staffId, 'st1');
+});
+
+test('staffWeekHours sums Monday to Sunday, weekStartStr finds the Monday', () => {
+  assert.equal(weekStartStr('2026-11-27'), '2026-11-23'); // Friday -> Monday
+  assert.equal(weekStartStr('2026-11-23'), '2026-11-23'); // Monday stays
+  assert.equal(weekStartStr('2026-11-29'), '2026-11-23'); // Sunday still that week
+  const shifts = [
+    { staffId: 'st1', date: '2026-11-23', start: '10:00', end: '18:00' }, // 8 h
+    { staffId: 'st1', date: '2026-11-25', start: '12:00', end: '22:00' }, // 10 h
+    { staffId: 'st1', date: '2026-11-30', start: '10:00', end: '18:00' }, // next week, ignored
+    { staffId: 'st2', date: '2026-11-23', start: '10:00', end: '18:00' }
+  ];
+  assert.equal(staffWeekHours(shifts, 'st1', '2026-11-23'), 18);
+  assert.equal(staffWeekHours(shifts, 'st2', '2026-11-23'), 8);
+  assert.equal(staffWeekHours([], 'st1', '2026-11-23'), 0);
 });
